@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ResponseSchemeComponent } from './response-scheme.component';
+import { BasisVariableDef } from './classes/basis-variable-def'; 
 
 
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UnitCodingScheme } from 'projects/response-scheme/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'schemer';
+  unitCodingScheme: UnitCodingScheme = {
+    generalInstructions: 'yoyo',
+    basisVariables: [],
+    codingScheme: []
+  }
 }
