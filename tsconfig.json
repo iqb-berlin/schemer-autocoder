@@ -14,6 +14,8 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
@@ -22,7 +24,7 @@
         "dist/response-scheme"
       ]
     },
-    "target": "es2017",
+    "target": "es2020",
     "module": "es2020",
     "lib": [
       "es2020",
