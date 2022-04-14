@@ -19,10 +19,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
-      "response-scheme": [
-        "dist/response-scheme/response-scheme",
-        "dist/response-scheme"
-      ]
+      "@response-scheme": ["projects/response-scheme/src/public-api.ts"]
     },
     "target": "es2020",
     "module": "es2020",
