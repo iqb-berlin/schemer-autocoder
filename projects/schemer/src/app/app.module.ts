@@ -10,12 +10,24 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { SchemerStageComponent } from './components/schemer-stage/schemer-stage.component';
+import {FlexModule} from "@angular/flex-layout";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatListModule} from "@angular/material/list";
+import {MatMenuModule} from "@angular/material/menu";
+import { VarSchemeComponent } from './components/var-scheme/var-scheme.component';
+import {NewVarSchemeComponent} from "./components/new-var-scheme.component";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
     AppComponent,
     SchemerToolbarComponent,
-    SchemerStageComponent
+    SchemerStageComponent,
+    VarSchemeComponent,
+    NewVarSchemeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +41,18 @@ import { SchemerStageComponent } from './components/schemer-stage/schemer-stage.
     }),
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    FlexModule,
+    MatTooltipModule,
+    MatListModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule
+  ],
+  entryComponents: [
+    NewVarSchemeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

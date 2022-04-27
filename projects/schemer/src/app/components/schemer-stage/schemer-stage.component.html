@@ -1,1 +1,49 @@
-<p>schemer-stage works!</p>
+<div class="scheme-body" fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div class="navi-bar" fxLayout="column" fxFlex="200px">
+    <div fxFlex class="var-scheme-list">
+      <mat-nav-list *ngFor="let varScheme of mainDataService.codingScheme?.codingScheme">
+        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
+           class="unit-list-entry"
+           [matTooltip]="varScheme.id"
+           (click)="selectVarScheme(varScheme)"
+           [class]="varScheme.id === (mainDataService.selectedVarScheme$ | async)?.id ? 'selected' : 'not-selected'">
+          {{ varScheme.id }}
+        </a>
+      </mat-nav-list>
+    </div>
+    <!-- # # # # # # # # # # # # # # # # # # # # # # # # -->
+    <div fxLayout="row">
+      <button mat-raised-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="33">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-raised-button (click)="deleteVarScheme()" matTooltip="Variable(n) löschen" matTooltipPosition="above" fxFlex="33">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-button [matMenuTriggerFor]="menu" disabled="disabled" matTooltip="Weitere Funktionen..." matTooltipPosition="above" fxFlex>
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="addVarScheme()">
+          <mat-icon>settings</mat-icon>Einstellungen
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="addVarScheme()">
+          <mat-icon>content_copy</mat-icon>Kopieren
+        </button>
+        <button mat-menu-item (click)="addVarScheme()">
+          <mat-icon>swap_horiz</mat-icon>Verschieben
+        </button>
+        <button mat-menu-item (click)="addVarScheme()">
+          <mat-icon>input</mat-icon>Import
+        </button>
+        <button mat-menu-item (click)="addVarScheme()">
+          <mat-icon>get_app</mat-icon>Export
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <var-scheme [varScheme]="mainDataService.selectedVarScheme$ | async" fxFlex class="var-scheme-container">
+
+  </var-scheme>
+</div>
