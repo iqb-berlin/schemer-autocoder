@@ -1,5 +1,6 @@
 <div class="scheme-body" fxLayout="row" fxLayoutAlign="space-between stretch">
   <div class="navi-bar" fxLayout="column" fxFlex="200px">
+    <div class="var-scheme-list-header">Schema-Variablen</div>
     <div fxFlex class="var-scheme-list">
       <mat-nav-list *ngFor="let varScheme of mainDataService.codingScheme?.codingScheme">
         <a mat-list-item style="height: 22px;text-overflow: ellipsis"
@@ -43,7 +44,23 @@
       </mat-menu>
     </div>
   </div>
-  <var-scheme [varScheme]="mainDataService.selectedVarScheme$ | async" fxFlex class="var-scheme-container">
+  <div fxLayout="column" fxFlex class="var-scheme-container">
+    <div class="var-scheme-list-header"></div>
+    <var-scheme [varScheme]="mainDataService.selectedVarScheme$ | async">
 
-  </var-scheme>
+    </var-scheme>
+  </div>
+  <div class="navi-bar" fxLayout="column" fxFlex="200px">
+    <div class="basic-var-list-header">Basisvariablen</div>
+    <div fxFlex class="var-scheme-list">
+      <mat-nav-list *ngFor="let varBasic of mainDataService.varList">
+        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
+           class="unit-list-entry"
+           [matTooltip]="varBasic.id"
+           (click)="showBasicVarDetails(varBasic)">
+          {{ varBasic.id }}
+        </a>
+      </mat-nav-list>
+    </div>
+  </div>
 </div>

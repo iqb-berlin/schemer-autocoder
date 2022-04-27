@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MainDataService} from "../../services/main-data.service";
-import {VariableScheme} from "@response-scheme";
+import {BasisVariableDef, VariableScheme} from "@response-scheme";
 import {MatDialog} from "@angular/material/dialog";
 import {NewVarSchemeComponent} from "../new-var-scheme.component";
 import {lastValueFrom, map} from "rxjs";
@@ -60,5 +60,9 @@ export class SchemerStageComponent implements OnInit {
 
   deleteVarScheme() {
 
+  }
+
+  showBasicVarDetails(varBasic: BasisVariableDef) {
+    alert(`Details für Basisvariable ${varBasic.id}`);
   }
 }
