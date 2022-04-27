@@ -22,13 +22,20 @@ export class SchemerStageComponent implements OnInit {
   }
 
   selectVarScheme(varScheme: VariableScheme | null = null) {
-    this.mainDataService.selectedVarScheme$.next(varScheme);
+    this.mainDataService.selectedScheme$.next(varScheme);
   }
 
   addVarScheme() {
     this.addVarSchemeDialog().then((newVarScheme: VariableScheme | boolean) => {
       if (typeof newVarScheme !== 'boolean') {
-        this.mainDataService.codingScheme.codingScheme.push(newVarScheme);
+        this.mainDataService.codingSchemes.push(newVarScheme);
+        this.mainDataService.codingSchemes.sort(function (a, b) {
+          const idA = a.id.toUpperCase();
+          const idB = b.id.toUpperCase();
+          if (idA < idB) return -1;
+          if (idA > idB) return 1;
+          return 0;
+        })
       }
     })
   }
@@ -49,7 +56,16 @@ export class SchemerStageComponent implements OnInit {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false) {
             return <VariableScheme>{
-              id: (<FormGroup>dialogResult).get('key')?.value.trim()
+              id: (<FormGroup>dialogResult).get('key')?.value.trim(),
+              label: (<FormGroup>dialogResult).get('key')?.value.trim(),
+              deriveData: {
+                sources: [],
+                from: '',
+                method: ''
+              },
+              transformations: [],
+              manualGeneralInstruction: '',
+              codes: []
             }
           }
         }

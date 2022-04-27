@@ -18,7 +18,7 @@ import { VarSchemeComponent } from './components/var-scheme/var-scheme.component
 import {NewVarSchemeComponent} from "./components/new-var-scheme.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
@@ -49,7 +49,8 @@ import {MatInputModule} from "@angular/material/input";
     MatDialogModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule
   ],
   entryComponents: [
     NewVarSchemeComponent

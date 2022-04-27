@@ -1,1 +1,11 @@
-<p>{{varScheme?.id}}</p>
+<div fxLayout="column" *ngIf="varScheme">
+  <div fxLayout="row">
+    <mat-form-field>
+      <input matInput placeholder="ID" [(ngModel)]="varScheme.id" [disabled]="varScheme.deriveData === null" >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Label" [(ngModel)]="varScheme.label" >
+    </mat-form-field>
+  </div>
+</div>
+

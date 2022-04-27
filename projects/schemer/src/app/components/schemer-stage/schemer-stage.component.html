@@ -1,13 +1,25 @@
 <div class="scheme-body" fxLayout="row" fxLayoutAlign="space-between stretch">
-  <div class="navi-bar" fxLayout="column" fxFlex="200px">
-    <div class="var-scheme-list-header">Schema-Variablen</div>
+  <p *ngIf="mainDataService.varList.length === 0" style="margin: 20px;">Keine Basis-Variablen definiert.</p>
+  <div class="navi-bar" fxLayout="column" fxFlex="200px" *ngIf="mainDataService.varList.length > 0">
     <div fxFlex class="var-scheme-list">
-      <mat-nav-list *ngFor="let varScheme of mainDataService.codingScheme?.codingScheme">
+      <div class="basic-var-list-header">Basisvariablen</div>
+      <mat-nav-list *ngFor="let varBasic of mainDataService.filteredCodingSchemes(mainDataService.codingSchemes, true)">
         <a mat-list-item style="height: 22px;text-overflow: ellipsis"
-           class="unit-list-entry"
+           class="var-list-entry"
+           [matTooltip]="varBasic.id"
+           [class]="varBasic.id === (mainDataService.selectedScheme$ | async)?.id ? 'selected' : 'not-selected'"
+           (click)="selectVarScheme(varBasic)">
+          {{ varBasic.id }}
+        </a>
+      </mat-nav-list>
+      <div class="var-scheme-list-header">Abgeleitete Variablen</div>
+      <p *ngIf="mainDataService.codingSchemes.length === 0" style="margin: 4px;">Keine abgeleiteten Variablen definiert.</p>
+      <mat-nav-list *ngFor="let varScheme of mainDataService.filteredCodingSchemes(mainDataService.codingSchemes, false)">
+        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
+           class="var-list-entry"
            [matTooltip]="varScheme.id"
            (click)="selectVarScheme(varScheme)"
-           [class]="varScheme.id === (mainDataService.selectedVarScheme$ | async)?.id ? 'selected' : 'not-selected'">
+           [class]="varScheme.id === (mainDataService.selectedScheme$ | async)?.id ? 'selected' : 'not-selected'">
           {{ varScheme.id }}
         </a>
       </mat-nav-list>
@@ -44,23 +56,7 @@
       </mat-menu>
     </div>
   </div>
-  <div fxLayout="column" fxFlex class="var-scheme-container">
-    <div class="var-scheme-list-header"></div>
-    <var-scheme [varScheme]="mainDataService.selectedVarScheme$ | async">
+  <var-scheme [varScheme]="mainDataService.selectedScheme$ | async" fxFlex class="var-scheme-container">
 
-    </var-scheme>
-  </div>
-  <div class="navi-bar" fxLayout="column" fxFlex="200px">
-    <div class="basic-var-list-header">Basisvariablen</div>
-    <div fxFlex class="var-scheme-list">
-      <mat-nav-list *ngFor="let varBasic of mainDataService.varList">
-        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
-           class="unit-list-entry"
-           [matTooltip]="varBasic.id"
-           (click)="showBasicVarDetails(varBasic)">
-          {{ varBasic.id }}
-        </a>
-      </mat-nav-list>
-    </div>
-  </div>
+  </var-scheme>
 </div>

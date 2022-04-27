@@ -59,7 +59,7 @@ export interface CodeData {
 export interface VariableScheme {
     id: string,
     label: string,
-    deriveData: DeriveData,
+    deriveData: DeriveData | null,
     transformations: string[],
     manualGeneralInstruction: string,
     codes: CodeData[],
