@@ -1,4 +1,4 @@
-<div fxLayout="column" *ngIf="codingScheme">
+<div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row">
     <mat-form-field>
       <input matInput placeholder="ID" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
@@ -6,6 +6,23 @@
     <mat-form-field fxFlex>
       <input matInput placeholder="Beschreibung" [(ngModel)]="codingScheme.label" >
     </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="250px" fxLayout="row">
+      <div *ngIf="codingScheme.sourceType === 'BASE'">{{ 'scheme-type.BASE' | translate}}</div>
+      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'" fxFlex>
+        <mat-label>Methode der Ableitung</mat-label>
+        <mat-select [(value)]="codingScheme.sourceType">
+          <mat-option value="DERIVE_CONCAT">
+            {{'scheme-type.DERIVE_CONCAT' | translate}}
+          </mat-option>
+          <mat-option value="DERIVE_SUM">
+            {{'scheme-type.DERIVE_SUM' | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
   </div>
 </div>
 
