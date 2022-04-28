@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VarSchemeComponent } from './var-scheme.component';
+import { CodingSchemeComponent } from './coding-scheme.component';
 
-describe('VarSchemeComponent', () => {
-  let component: VarSchemeComponent;
-  let fixture: ComponentFixture<VarSchemeComponent>;
+describe('CodingSchemeComponent', () => {
+  let component: CodingSchemeComponent;
+  let fixture: ComponentFixture<CodingSchemeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VarSchemeComponent ]
+      declarations: [ CodingSchemeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VarSchemeComponent);
+    fixture = TestBed.createComponent(CodingSchemeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

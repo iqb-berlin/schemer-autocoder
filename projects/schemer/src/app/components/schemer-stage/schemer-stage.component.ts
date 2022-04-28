@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MainDataService} from "../../services/main-data.service";
-import {BasisVariableDef, VariableScheme} from "@response-scheme";
+import {BasisVariableDef, CodingScheme} from "@response-scheme";
 import {MatDialog} from "@angular/material/dialog";
 import {NewVarSchemeComponent} from "../new-var-scheme.component";
 import {lastValueFrom, map} from "rxjs";
@@ -21,12 +21,12 @@ export class SchemerStageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectVarScheme(varScheme: VariableScheme | null = null) {
+  selectVarScheme(varScheme: CodingScheme | null = null) {
     this.mainDataService.selectedScheme$.next(varScheme);
   }
 
   addVarScheme() {
-    this.addVarSchemeDialog().then((newVarScheme: VariableScheme | boolean) => {
+    this.addVarSchemeDialog().then((newVarScheme: CodingScheme | boolean) => {
       if (typeof newVarScheme !== 'boolean') {
         this.mainDataService.codingSchemes.push(newVarScheme);
         this.mainDataService.codingSchemes.sort(function (a, b) {
@@ -41,7 +41,7 @@ export class SchemerStageComponent implements OnInit {
   }
 
 
-  async addVarSchemeDialog(): Promise<VariableScheme | boolean> {
+  async addVarSchemeDialog(): Promise<CodingScheme | boolean> {
     this.selectVarScheme();
     const dialogRef = this.newVarSchemeDialog.open(NewVarSchemeComponent, {
       width: '600px',
@@ -55,15 +55,13 @@ export class SchemerStageComponent implements OnInit {
       map(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false) {
-            return <VariableScheme>{
+            return <CodingScheme>{
               id: (<FormGroup>dialogResult).get('key')?.value.trim(),
-              label: (<FormGroup>dialogResult).get('key')?.value.trim(),
-              deriveData: {
-                sources: [],
-                from: '',
-                method: ''
-              },
-              transformations: [],
+              label: (<FormGroup>dialogResult).get('label')?.value.trim(),
+              sourceType: 'DERIVE_CONCAT',
+              deriveSources: [],
+              deriveSourceType: 'CODE',
+              valueTransformations: [],
               manualGeneralInstruction: '',
               codes: []
             }

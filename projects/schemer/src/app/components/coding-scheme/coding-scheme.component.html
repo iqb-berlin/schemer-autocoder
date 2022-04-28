@@ -1,0 +1,11 @@
+<div fxLayout="column" *ngIf="codingScheme">
+  <div fxLayout="row">
+    <mat-form-field>
+      <input matInput placeholder="ID" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Beschreibung" [(ngModel)]="codingScheme.label" >
+    </mat-form-field>
+  </div>
+</div>
+

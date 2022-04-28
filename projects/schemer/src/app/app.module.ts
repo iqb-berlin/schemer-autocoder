@@ -14,7 +14,7 @@ import {FlexModule} from "@angular/flex-layout";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatListModule} from "@angular/material/list";
 import {MatMenuModule} from "@angular/material/menu";
-import { VarSchemeComponent } from './components/var-scheme/var-scheme.component';
+import { CodingSchemeComponent } from './components/coding-scheme/coding-scheme.component';
 import {NewVarSchemeComponent} from "./components/new-var-scheme.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -26,7 +26,7 @@ import {MatInputModule} from "@angular/material/input";
     AppComponent,
     SchemerToolbarComponent,
     SchemerStageComponent,
-    VarSchemeComponent,
+    CodingSchemeComponent,
     NewVarSchemeComponent
   ],
   imports: [
