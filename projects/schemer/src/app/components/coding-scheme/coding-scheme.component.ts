@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodingScheme} from "@response-scheme";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {MatDialog} from "@angular/material/dialog";
+import {EditTextComponent} from "../edit-text/edit-text.component";
 
 @Component({
   selector: 'var-scheme',
@@ -10,7 +13,10 @@ export class CodingSchemeComponent implements OnInit {
   @Input() codingScheme: CodingScheme | null = null;
   @Input() allVariables: string[] = [];
 
-  constructor() { }
+  constructor(
+    private sanitizer: DomSanitizer,
+    private editTextDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
@@ -46,6 +52,29 @@ export class CodingSchemeComponent implements OnInit {
       } else if (!checked && transPos >= 0) {
         this.codingScheme.valueTransformations.splice(transPos, 1);
       }
+    }
+  }
+
+  getSanitizedText(text: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(text);
+  }
+
+  editTextDialog_generalInstruction(): void {
+    if (this.codingScheme) {
+      const dialogRef = this.editTextDialog.open(EditTextComponent, {
+        width: '600px',
+        data: {
+          title: 'Allgemeine Instruktionen',
+          text: this.codingScheme.manualGeneralInstruction
+        }
+      });
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (typeof dialogResult !== 'undefined') {
+          if (dialogResult !== false && this.codingScheme) {
+            this.codingScheme.manualGeneralInstruction = dialogResult
+          }
+        }
+      })
     }
   }
 }

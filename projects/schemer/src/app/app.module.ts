@@ -24,6 +24,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
+import {EditTextComponent} from "./components/edit-text/edit-text.component";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatCardModule} from "@angular/material/card";
     SchemerToolbarComponent,
     SchemerStageComponent,
     CodingSchemeComponent,
-    NewVarSchemeComponent
+    NewVarSchemeComponent,
+    EditTextComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import {MatCardModule} from "@angular/material/card";
     MatCardModule
   ],
   entryComponents: [
-    NewVarSchemeComponent
+    NewVarSchemeComponent,
+    EditTextComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

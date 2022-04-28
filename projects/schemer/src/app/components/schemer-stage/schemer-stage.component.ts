@@ -19,6 +19,7 @@ export class SchemerStageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.mainDataService.syncVariables();
   }
 
   selectVarScheme(varScheme: CodingScheme | null = null) {

@@ -1,6 +1,6 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row" fxLayoutGap="10px">
-    <mat-form-field>
+    <mat-form-field fxFlex="280px">
       <input matInput [placeholder]="'id' | translate" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
     </mat-form-field>
     <mat-form-field fxFlex>
@@ -8,9 +8,9 @@
     </mat-form-field>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
-    <div fxFlex="250px" fxLayout="row">
+    <div fxFlex="280px" fxLayout="column">
       <div *ngIf="codingScheme.sourceType === 'BASE'">{{ 'scheme-type.BASE' | translate}}</div>
-      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'" fxFlex>
+      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'">
         <mat-label>Methode der Ableitung</mat-label>
         <mat-select [(value)]="codingScheme.sourceType">
           <mat-option [value]="'DERIVE_CONCAT'">
@@ -18,6 +18,20 @@
           </mat-option>
           <mat-option [value]="'DERIVE_SUM'">
             {{'scheme-type.DERIVE_SUM' | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'">
+        <mat-label>{{ 'derive-source-type.prompt' | translate }}</mat-label>
+        <mat-select [(value)]="codingScheme.deriveSourceType">
+          <mat-option [value]="'VALUE'">
+            {{'derive-source-type.VALUE' | translate}}
+          </mat-option>
+          <mat-option [value]="'CODE'">
+            {{'derive-source-type.CODE' | translate}}
+          </mat-option>
+          <mat-option [value]="'SCORE'">
+            {{'derive-source-type.SCORE' | translate}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -43,25 +57,9 @@
         </button>
       </mat-menu>
     </div>
-    <div fxFlex="180px" fxLayout="row" *ngIf="codingScheme.sourceType !== 'BASE'">
-      <mat-form-field fxFlex>
-        <mat-label>{{ 'derive-source-type.prompt' | translate }}</mat-label>
-        <mat-select [(value)]="codingScheme.deriveSourceType">
-          <mat-option [value]="'VALUE'">
-            {{'derive-source-type.VALUE' | translate}}
-          </mat-option>
-          <mat-option [value]="'CODE'">
-            {{'derive-source-type.CODE' | translate}}
-          </mat-option>
-          <mat-option [value]="'SCORE'">
-            {{'derive-source-type.SCORE' | translate}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
   </div>
-  <div fxLayout="row">
-    <mat-card>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <mat-card fxFlex="280px">
       <mat-card-subtitle>{{'value-transformation.prompt' | translate}}</mat-card-subtitle>
       <mat-card-content fxLayout="column">
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('TO_UPPER') >= 0) : false"
@@ -80,6 +78,17 @@
                       (change)="alterValueTransformation('TIME_TO_ISO', $event.checked)">
           {{'value-transformation.TIME_TO_ISO' | translate}}
         </mat-checkbox>
+      </mat-card-content>
+    </mat-card>
+    <mat-card fxFlex>
+      <mat-card-subtitle fxLayout="row" fxLayoutAlign="space-between stretch">
+        {{'manual-instruction.prompt-general' | translate}}
+        <button mat-flat-button (click)="editTextDialog_generalInstruction()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-subtitle>
+      <mat-card-content class="instructions-general">
+        <div [innerHTML]="codingScheme ? getSanitizedText(codingScheme.manualGeneralInstruction) : null"></div>
       </mat-card-content>
     </mat-card>
   </div>
