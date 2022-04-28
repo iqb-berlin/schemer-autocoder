@@ -56,7 +56,8 @@
       </mat-menu>
     </div>
   </div>
-  <var-scheme [codingScheme]="mainDataService.selectedScheme$ | async" fxFlex class="var-scheme-container">
+  <var-scheme [codingScheme]="mainDataService.selectedScheme$ | async" fxFlex class="var-scheme-container"
+              [allVariables]="mainDataService.allCodingSchemeIds(mainDataService.codingSchemes)">
 
   </var-scheme>
 </div>

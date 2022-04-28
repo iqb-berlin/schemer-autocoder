@@ -1,5 +1,5 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
-  <div fxLayout="row">
+  <div fxLayout="row" fxLayoutGap="10px">
     <mat-form-field>
       <input matInput placeholder="ID" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
     </mat-form-field>
@@ -7,7 +7,7 @@
       <input matInput placeholder="Beschreibung" [(ngModel)]="codingScheme.label" >
     </mat-form-field>
   </div>
-  <div fxLayout="row">
+  <div fxLayout="row" fxLayoutGap="10px">
     <div fxFlex="250px" fxLayout="row">
       <div *ngIf="codingScheme.sourceType === 'BASE'">{{ 'scheme-type.BASE' | translate}}</div>
       <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'" fxFlex>
@@ -22,7 +22,27 @@
         </mat-select>
       </mat-form-field>
     </div>
-
+    <div fxFlex fxLayout="row" *ngIf="codingScheme.sourceType !== 'BASE'">
+      <mat-form-field class="sources">
+        <mat-label>Quell-Variablen für die Ableitung</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngIf="codingScheme.deriveSources.length === 0" class="no-sources">Keine Quellen definiert.</mat-chip>
+          <mat-chip *ngFor="let source of codingScheme.deriveSources"
+                    removable="true" (removed)="deleteDeriveSource(source)">
+            {{source}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <button mat-flat-button [matMenuTriggerFor]="menu" *ngIf="getNewSources(codingScheme.deriveSources).length > 0">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip-list>
+      </mat-form-field>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let newSource of getNewSources(codingScheme.deriveSources)" (click)="addDeriveSource(newSource)">
+          {{newSource}}
+        </button>
+      </mat-menu>
+    </div>
   </div>
 </div>
 

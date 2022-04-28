@@ -21,6 +21,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MatSelectModule} from "@angular/material/select";
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule
   ],
   entryComponents: [
     NewVarSchemeComponent
