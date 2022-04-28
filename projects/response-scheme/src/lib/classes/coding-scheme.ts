@@ -60,7 +60,7 @@ export interface CodingScheme {
   label: string,
   sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM',
   deriveSources: string[],
-  deriveSourceType: 'VALUE' | 'CODE' | 'SCORE' | '',
+  deriveSourceType: 'VALUE' | 'CODE' | 'SCORE',
   valueTransformations: TransformMethod[],
   manualGeneralInstruction: string,
   codes: CodeData[],

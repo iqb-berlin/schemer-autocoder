@@ -1,10 +1,10 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row" fxLayoutGap="10px">
     <mat-form-field>
-      <input matInput placeholder="ID" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
+      <input matInput [placeholder]="'id' | translate" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
     </mat-form-field>
     <mat-form-field fxFlex>
-      <input matInput placeholder="Beschreibung" [(ngModel)]="codingScheme.label" >
+      <input matInput [placeholder]="'description' | translate" [(ngModel)]="codingScheme.label" >
     </mat-form-field>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
@@ -13,10 +13,10 @@
       <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'" fxFlex>
         <mat-label>Methode der Ableitung</mat-label>
         <mat-select [(value)]="codingScheme.sourceType">
-          <mat-option value="DERIVE_CONCAT">
+          <mat-option [value]="'DERIVE_CONCAT'">
             {{'scheme-type.DERIVE_CONCAT' | translate}}
           </mat-option>
-          <mat-option value="DERIVE_SUM">
+          <mat-option [value]="'DERIVE_SUM'">
             {{'scheme-type.DERIVE_SUM' | translate}}
           </mat-option>
         </mat-select>
@@ -24,9 +24,9 @@
     </div>
     <div fxFlex fxLayout="row" *ngIf="codingScheme.sourceType !== 'BASE'">
       <mat-form-field class="sources">
-        <mat-label>Quell-Variablen für die Ableitung</mat-label>
+        <mat-label>{{ 'derive-sources.prompt' | translate }}</mat-label>
         <mat-chip-list #chipList>
-          <mat-chip *ngIf="codingScheme.deriveSources.length === 0" class="no-sources">Keine Quellen definiert.</mat-chip>
+          <mat-chip *ngIf="codingScheme.deriveSources.length === 0" class="no-sources">{{ 'derive-sources.error' | translate }}</mat-chip>
           <mat-chip *ngFor="let source of codingScheme.deriveSources"
                     removable="true" (removed)="deleteDeriveSource(source)">
             {{source}}
@@ -42,6 +42,22 @@
           {{newSource}}
         </button>
       </mat-menu>
+    </div>
+    <div fxFlex="180px" fxLayout="row" *ngIf="codingScheme.sourceType !== 'BASE'">
+      <mat-form-field fxFlex>
+        <mat-label>{{ 'derive-source-type.prompt' | translate }}</mat-label>
+        <mat-select [(value)]="codingScheme.deriveSourceType">
+          <mat-option [value]="'VALUE'">
+            {{'derive-source-type.VALUE' | translate}}
+          </mat-option>
+          <mat-option [value]="'CODE'">
+            {{'derive-source-type.CODE' | translate}}
+          </mat-option>
+          <mat-option [value]="'SCORE'">
+            {{'derive-source-type.SCORE' | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 </div>
