@@ -61,7 +61,7 @@ export interface CodingScheme {
   sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM',
   deriveSources: string[],
   deriveSourceType: 'VALUE' | 'CODE' | 'SCORE',
-  valueTransformations: TransformMethod[],
+  valueTransformations: string[],
   manualGeneralInstruction: string,
   codes: CodeData[],
 }

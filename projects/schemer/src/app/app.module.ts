@@ -22,6 +22,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import {MatChipsModule} from "@angular/material/chips";
     MatInputModule,
     FormsModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCheckboxModule,
+    MatCardModule
   ],
   entryComponents: [
     NewVarSchemeComponent

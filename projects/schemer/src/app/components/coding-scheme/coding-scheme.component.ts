@@ -38,4 +38,14 @@ export class CodingSchemeComponent implements OnInit {
     }
   }
 
+  alterValueTransformation(transId: string, checked: boolean) {
+    if (this.codingScheme) {
+      const transPos = this.codingScheme.valueTransformations.indexOf(transId);
+      if (checked && transPos < 0) {
+        this.codingScheme.valueTransformations.push(transId);
+      } else if (!checked && transPos >= 0) {
+        this.codingScheme.valueTransformations.splice(transPos, 1);
+      }
+    }
+  }
 }
