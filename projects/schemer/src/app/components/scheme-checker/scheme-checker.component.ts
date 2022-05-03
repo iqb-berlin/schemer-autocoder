@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MainDataService} from "../../services/main-data.service";
+import {ResponseData} from "@response-scheme";
+import {AutoCoder} from "@auto-coder";
+import {ShowCodingResultsComponent} from "./show-coding-results.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'schema-checker',
@@ -10,7 +14,8 @@ export class SchemeCheckerComponent implements OnInit {
   values: { [Key in string]: string } = {};
 
   constructor(
-    public mainDataService: MainDataService
+    public mainDataService: MainDataService,
+    private showCodingResultsDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +26,18 @@ export class SchemeCheckerComponent implements OnInit {
   }
 
   startEvaluation() {
-    console.log(this.values);
+    const myValues: ResponseData[] = [];
+    Object.keys(this.values).forEach(k => {
+      myValues.push({
+        id: k,
+        value: this.values[k],
+        status: "VALUE_CHANGED"
+      })
+    })
+    const autoCoder = new AutoCoder(myValues);
+    this.showCodingResultsDialog.open(ShowCodingResultsComponent, {
+      width: '600px',
+      data: autoCoder.run(this.mainDataService.codingSchemes)
+    });
   }
 }

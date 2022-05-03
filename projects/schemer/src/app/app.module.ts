@@ -28,6 +28,7 @@ import {EditTextComponent} from "./components/edit-text/edit-text.component";
 import { CodeDataComponent } from './components/code/code-data.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
+import {ShowCodingResultsComponent} from "./components/scheme-checker/show-coding-results.component";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SchemeCheckerComponent } from './components/scheme-checker/scheme-check
     NewVarSchemeComponent,
     EditTextComponent,
     CodeDataComponent,
+    ShowCodingResultsComponent,
     SchemeCheckerComponent
   ],
   imports: [
@@ -70,7 +72,8 @@ import { SchemeCheckerComponent } from './components/scheme-checker/scheme-check
   ],
   entryComponents: [
     NewVarSchemeComponent,
-    EditTextComponent
+    EditTextComponent,
+    ShowCodingResultsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
