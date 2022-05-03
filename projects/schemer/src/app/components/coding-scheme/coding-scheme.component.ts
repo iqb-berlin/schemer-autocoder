@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CodeData, CodingScheme} from "@response-scheme";
+import {CodeData, CodingScheme, ValueTransformation} from "@response-scheme";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {MatDialog} from "@angular/material/dialog";
 import {EditTextComponent} from "../edit-text/edit-text.component";
@@ -44,7 +44,7 @@ export class CodingSchemeComponent implements OnInit {
     }
   }
 
-  alterValueTransformation(transId: string, checked: boolean) {
+  alterValueTransformation(transId: ValueTransformation, checked: boolean) {
     if (this.codingScheme) {
       const transPos = this.codingScheme.valueTransformations.indexOf(transId);
       if (checked && transPos < 0) {

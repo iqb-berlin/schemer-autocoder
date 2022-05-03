@@ -3,6 +3,8 @@ import { BasisVariableDef } from './basis-variable-def';
 export type RuleMethod = "MATCH" | "MATCH_REGEX" | "NUMERIC_RANGE" | "NUMERIC_LESS_THEN" | "NUMERIC_MORE_THEN" |
   "NUMERIC_MAX" | "NUMERIC_MIN" | "IS_EMPTY" | "ELSE";
 
+export type ValueTransformation = 'TO_UPPER' | 'REMOVE_WHITE_SPACES' | 'DATE_TO_ISO' | 'TIME_TO_ISO';
+
 export interface CodingRule {
     method: RuleMethod,
     parameters: string[],
@@ -22,7 +24,7 @@ export interface CodingScheme {
   sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM',
   deriveSources: string[],
   deriveSourceType: 'VALUE' | 'CODE' | 'SCORE',
-  valueTransformations: string[],
+  valueTransformations: ValueTransformation[],
   manualInstruction: string,
   codes: CodeData[],
 }

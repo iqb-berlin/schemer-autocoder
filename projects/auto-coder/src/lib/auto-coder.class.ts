@@ -1,4 +1,5 @@
 import {CodingScheme, ResponseData} from "@response-scheme";
+import {CoderVariableClass} from "./coder-variable.class";
 
 export class AutoCoder {
   sourceValues: ResponseData[];
@@ -8,17 +9,26 @@ export class AutoCoder {
   }
 
   run(codingScheme: CodingScheme[]): ResponseData[] {
-    const result = this.sourceValues;
+    let usedSources: string[] = [];
+    let coderVariables: CoderVariableClass[] = [];
     this.sourceValues.forEach(v => {
-      result.push(v);
-      result.push(v);
-      result.push(v);
-      result.push(v);
-      result.push(v);
-      result.push(v);
-      result.push(v);
-      result.push(v);
+      let myCodingScheme: CodingScheme | null = null;
+      codingScheme.forEach(cs => {
+        if (cs.id === v.id) myCodingScheme = cs
+      });
+      coderVariables.push(new CoderVariableClass(v, myCodingScheme));
+      usedSources.push(v.id);
     })
-    return result
+    codingScheme.forEach(cs => {
+      if (usedSources.indexOf(cs.id) < 0) coderVariables.push(new CoderVariableClass(null, cs));
+    });
+    let changed = true;
+    while (changed) {
+      changed = false;
+      coderVariables.forEach(cv => {
+        if (cv.deriveAndCode_changesMade(coderVariables)) changed = true;
+      })
+    }
+    return coderVariables
   }
 }
