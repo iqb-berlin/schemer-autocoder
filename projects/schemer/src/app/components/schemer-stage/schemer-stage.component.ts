@@ -63,7 +63,7 @@ export class SchemerStageComponent implements OnInit {
               deriveSources: [],
               deriveSourceType: 'CODE',
               valueTransformations: [],
-              manualGeneralInstruction: '',
+              manualInstruction: '',
               codes: []
             }
           }

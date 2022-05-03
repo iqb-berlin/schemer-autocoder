@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CodingScheme} from "@response-scheme";
+import {CodeData, CodingScheme} from "@response-scheme";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {MatDialog} from "@angular/material/dialog";
 import {EditTextComponent} from "../edit-text/edit-text.component";
@@ -59,22 +59,44 @@ export class CodingSchemeComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(text);
   }
 
-  editTextDialog_generalInstruction(): void {
+  editTextDialog_manualInstruction(): void {
     if (this.codingScheme) {
       const dialogRef = this.editTextDialog.open(EditTextComponent, {
         width: '600px',
         data: {
           title: 'Allgemeine Instruktionen',
-          text: this.codingScheme.manualGeneralInstruction
+          text: this.codingScheme.manualInstruction
         }
       });
       dialogRef.afterClosed().subscribe(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false && this.codingScheme) {
-            this.codingScheme.manualGeneralInstruction = dialogResult
+            this.codingScheme.manualInstruction = dialogResult
           }
         }
       })
+    }
+  }
+
+  addCode() {
+    if (this.codingScheme) {
+      this.codingScheme.codes.push({
+        id: 1,
+        label: '',
+        score: 0,
+        rules: [],
+        manualInstruction: ''
+      })
+    }
+  }
+
+  deleteCode(codeToDeleteId: number) {
+    if (this.codingScheme) {
+      let codePos = -1;
+      this.codingScheme.codes.forEach((c: CodeData, i: number) => {
+        if (c.id === codeToDeleteId) codePos = i;
+      });
+      if (codePos >= 0) this.codingScheme.codes.splice(codePos, 1);
     }
   }
 }

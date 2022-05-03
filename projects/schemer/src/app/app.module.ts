@@ -25,6 +25,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
 import {EditTextComponent} from "./components/edit-text/edit-text.component";
+import { CodeDataComponent } from './components/code/code-data.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {EditTextComponent} from "./components/edit-text/edit-text.component";
     SchemerStageComponent,
     CodingSchemeComponent,
     NewVarSchemeComponent,
-    EditTextComponent
+    EditTextComponent,
+    CodeDataComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,53 @@
+<div fxLayout="column" *ngIf="codeData" fxLayoutGap="5px">
+  <div fxLayout="row" fxLayoutGap="10px" class="code-main-data">
+    <mat-form-field fxFlex="140px" [class]="uniqueNumberValidator(codeData.id) ? '' : 'not-unique-id'">
+      <input matInput [placeholder]="'code.id' | translate" [(ngModel)]="codeData.id" type="number">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput [placeholder]="'code.description' | translate" [(ngModel)]="codeData.label">
+    </mat-form-field>
+    <mat-form-field fxFlex="140px">
+      <input matInput [placeholder]="'code.score' | translate" [(ngModel)]="codeData.score" type="number" required>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <mat-card fxFlex>
+      <mat-card-subtitle>{{'code.prompt-auto-coding' | translate}}</mat-card-subtitle>
+      <mat-card-content fxLayout="column">
+        <div *ngFor="let rule of codeData.rules">
+          <div>{{('code.' + rule.method) | translate}}</div>
+          <div *ngIf="getParamCount(rule.method) < 0">
+yoyo
+          </div>
+          <mat-form-field fxFlex="80px" *ngIf="getParamCount(rule.method) > 0">
+            <input matInput [(ngModel)]="rule.parameters[0]">
+          </mat-form-field>
+          <mat-form-field fxFlex="80px" *ngIf="getParamCount(rule.method) > 1">
+            <input matInput [(ngModel)]="rule.parameters[1]">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <button mat-flat-button [matMenuTriggerFor]="menu" *ngIf="getNewRules().length > 0">
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let newSource of getNewRules()" (click)="addRule(newSource)">
+              {{('code.' + newSource) | translate}}
+            </button>
+          </mat-menu>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card fxFlex>
+      <mat-card-subtitle fxLayout="row" fxLayoutAlign="space-between stretch">
+        {{'manual-instruction.prompt-code' | translate}}
+        <button mat-flat-button (click)="editTextDialog_manualInstruction()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-subtitle>
+      <mat-card-content class="instructions">
+        <div [innerHTML]="codeData ? getSanitizedText(codeData.manualInstruction) : null"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

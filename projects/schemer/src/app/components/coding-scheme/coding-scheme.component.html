@@ -7,10 +7,9 @@
       <input matInput [placeholder]="'description' | translate" [(ngModel)]="codingScheme.label" >
     </mat-form-field>
   </div>
-  <div fxLayout="row" fxLayoutGap="10px">
+  <div fxLayout="row" fxLayoutGap="10px" *ngIf="codingScheme.sourceType !== 'BASE'">
     <div fxFlex="280px" fxLayout="column">
-      <div *ngIf="codingScheme.sourceType === 'BASE'">{{ 'scheme-type.BASE' | translate}}</div>
-      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'">
+      <mat-form-field>
         <mat-label>Methode der Ableitung</mat-label>
         <mat-select [(value)]="codingScheme.sourceType">
           <mat-option [value]="'DERIVE_CONCAT'">
@@ -21,7 +20,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field *ngIf="codingScheme.sourceType !== 'BASE'">
+      <mat-form-field>
         <mat-label>{{ 'derive-source-type.prompt' | translate }}</mat-label>
         <mat-select [(value)]="codingScheme.deriveSourceType">
           <mat-option [value]="'VALUE'">
@@ -36,7 +35,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxFlex fxLayout="row" *ngIf="codingScheme.sourceType !== 'BASE'">
+    <div fxFlex fxLayout="row">
       <mat-form-field class="sources">
         <mat-label>{{ 'derive-sources.prompt' | translate }}</mat-label>
         <mat-chip-list #chipList>
@@ -83,14 +82,29 @@
     <mat-card fxFlex>
       <mat-card-subtitle fxLayout="row" fxLayoutAlign="space-between stretch">
         {{'manual-instruction.prompt-general' | translate}}
-        <button mat-flat-button (click)="editTextDialog_generalInstruction()">
+        <button mat-flat-button (click)="editTextDialog_manualInstruction()">
           <mat-icon>edit</mat-icon>
         </button>
       </mat-card-subtitle>
-      <mat-card-content class="instructions-general">
-        <div [innerHTML]="codingScheme ? getSanitizedText(codingScheme.manualGeneralInstruction) : null"></div>
+      <mat-card-content class="instructions">
+        <div [innerHTML]="codingScheme ? getSanitizedText(codingScheme.manualInstruction) : null"></div>
       </mat-card-content>
     </mat-card>
+  </div>
+  <div fxLayout="column" fxLayoutGap="10px">
+    <h3>{{'code.header' | translate}}</h3>
+    <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let cd of codingScheme.codes" fxLayoutGap="10px">
+      <code-data [codeData]="cd" [allCodes]="codingScheme.codes" fxFlex></code-data>
+      <button mat-raised-button (click)="deleteCode(cd.id)" [matTooltip]="'code.prompt.delete' | translate">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+      <button mat-raised-button (click)="addCode()">
+        <mat-icon>add</mat-icon>{{'code.prompt.add' | translate}}
+      </button>
+      <div *ngIf="codingScheme.codes.length === 0" class="no-codes">{{'code.no-codes' | translate}}</div>
+    </div>
   </div>
 </div>
 
