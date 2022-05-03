@@ -12,6 +12,7 @@ import {EditTextComponent} from "../edit-text/edit-text.component";
 export class CodeDataComponent implements OnInit {
   @Input() codeData: CodeData | null = null;
   @Input() allCodes: CodeData[] = [];
+  showCodeButtonsOf = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -52,7 +53,7 @@ export class CodeDataComponent implements OnInit {
           'NUMERIC_MAX', 'NUMERIC_MIN', 'IS_EMPTY', 'ELSE'];
       } else {
         const usedMethods = this.codeData.rules.map((rule) => rule.method);
-        if (usedMethods.indexOf('ELSE') < 0) {
+        if (usedMethods.indexOf('ELSE') < 0 && usedMethods.indexOf('IS_EMPTY') < 0) {
           if (usedMethods.indexOf('MATCH') < 0) returnSources.push('MATCH');
           if (usedMethods.indexOf('MATCH_REGEX') < 0) returnSources.push('MATCH_REGEX');
           if (usedMethods.indexOf('NUMERIC_RANGE') < 0 && usedMethods.indexOf('NUMERIC_MIN') < 0 &&
@@ -63,8 +64,8 @@ export class CodeDataComponent implements OnInit {
             returnSources.push('NUMERIC_RANGE');
             returnSources.push('NUMERIC_MAX');
             returnSources.push('NUMERIC_LESS_THEN');
+            returnSources.push('IS_EMPTY');
           }
-          if (usedMethods.indexOf('IS_EMPTY') < 0) returnSources.push('IS_EMPTY');
         }
       }
     }
@@ -92,7 +93,7 @@ export class CodeDataComponent implements OnInit {
         parameters: []
       };
       const paramCount = this.getParamCount(newRuleMethod);
-      if (paramCount > 0) newRule.parameters.push('');
+      if (paramCount !== 0) newRule.parameters.push('');
       if (paramCount > 1) newRule.parameters.push('');
       this.codeData.rules.push(newRule);
     }
@@ -110,5 +111,13 @@ export class CodeDataComponent implements OnInit {
       }
     });
     return notUnique.indexOf(codeToValidate) < 0
+  }
+
+  deleteRule(ruleMethod: RuleMethod) {
+    if (this.codeData) {
+      const ruleMethods = this.codeData.rules.map(r => r.method);
+      const methodIndex = ruleMethods.indexOf(ruleMethod);
+      if (methodIndex >= 0) this.codeData.rules.splice(methodIndex, 1);
+    }
   }
 }
