@@ -70,11 +70,11 @@
           {{'value-transformation.REMOVE_WHITE_SPACES' | translate}}
         </mat-checkbox>
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('DATE_TO_ISO') >= 0) : false"
-                      (change)="alterValueTransformation('DATE_TO_ISO', $event.checked)">
+                      (change)="alterValueTransformation('DATE_TO_ISO', $event.checked)" disabled="disabled">
           {{'value-transformation.DATE_TO_ISO' | translate}}
         </mat-checkbox>
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('TIME_TO_ISO') >= 0) : false"
-                      (change)="alterValueTransformation('TIME_TO_ISO', $event.checked)">
+                      (change)="alterValueTransformation('TIME_TO_ISO', $event.checked)" disabled="disabled">
           {{'value-transformation.TIME_TO_ISO' | translate}}
         </mat-checkbox>
       </mat-card-content>
