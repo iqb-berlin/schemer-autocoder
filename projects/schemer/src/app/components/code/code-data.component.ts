@@ -50,7 +50,9 @@ export class CodeDataComponent implements OnInit {
     if (this.codeData) {
       if (this.codeData.rules.length === 0) {
         returnSources = ['MATCH', 'MATCH_REGEX', 'NUMERIC_RANGE', 'NUMERIC_LESS_THEN', 'NUMERIC_MORE_THEN',
-          'NUMERIC_MAX', 'NUMERIC_MIN', 'IS_EMPTY', 'ELSE'];
+          'NUMERIC_MAX', 'NUMERIC_MIN'];
+        if (!this.hasEmptyRule()) returnSources.push('IS_EMPTY');
+        if (!this.hasElseRule()) returnSources.push('ELSE');
       } else {
         const usedMethods = this.codeData.rules.map((rule) => rule.method);
         if (usedMethods.indexOf('ELSE') < 0 && usedMethods.indexOf('IS_EMPTY') < 0) {
@@ -64,7 +66,6 @@ export class CodeDataComponent implements OnInit {
             returnSources.push('NUMERIC_RANGE');
             returnSources.push('NUMERIC_MAX');
             returnSources.push('NUMERIC_LESS_THEN');
-            returnSources.push('IS_EMPTY');
           }
         }
       }
@@ -119,5 +120,25 @@ export class CodeDataComponent implements OnInit {
       const methodIndex = ruleMethods.indexOf(ruleMethod);
       if (methodIndex >= 0) this.codeData.rules.splice(methodIndex, 1);
     }
+  }
+
+  hasEmptyRule(): boolean {
+    let emptyRuleFound = false;
+    this.allCodes.forEach(c => {
+      c.rules.forEach(r => {
+        if (r.method === 'IS_EMPTY') emptyRuleFound = true;
+      })
+    });
+    return emptyRuleFound
+  }
+
+  hasElseRule(): boolean {
+    let elseRuleFound = false;
+    this.allCodes.forEach(c => {
+      c.rules.forEach(r => {
+        if (r.method === 'ELSE') elseRuleFound = true;
+      })
+    });
+    return elseRuleFound
   }
 }
