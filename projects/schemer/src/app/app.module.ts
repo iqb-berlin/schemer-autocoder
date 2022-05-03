@@ -26,6 +26,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
 import {EditTextComponent} from "./components/edit-text/edit-text.component";
 import { CodeDataComponent } from './components/code/code-data.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { CodeDataComponent } from './components/code/code-data.component';
     CodingSchemeComponent,
     NewVarSchemeComponent,
     EditTextComponent,
-    CodeDataComponent
+    CodeDataComponent,
+    SchemeCheckerComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { CodeDataComponent } from './components/code/code-data.component';
     MatSelectModule,
     MatChipsModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule
   ],
   entryComponents: [
     NewVarSchemeComponent,
