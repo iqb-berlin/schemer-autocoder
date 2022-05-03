@@ -27,16 +27,24 @@ export class SchemeCheckerComponent implements OnInit {
 
   startEvaluation() {
     const myValues: ResponseData[] = [];
-    Object.keys(this.values).forEach(k => {
-      myValues.push({
-        id: k,
-        value: this.values[k],
-        status: "VALUE_CHANGED"
-      })
-    })
+    this.mainDataService.filteredCodingSchemes(this.mainDataService.codingSchemes, true).forEach(cs => {
+      if (this.values[cs.id]) {
+        myValues.push({
+          id: cs.id,
+          value: this.values[cs.id],
+          status: "VALUE_CHANGED"
+        })
+      } else {
+        myValues.push({
+          id: cs.id,
+          value: null,
+          status: "NOT_SET"
+        })
+      }
+    });
     const autoCoder = new AutoCoder(myValues);
     this.showCodingResultsDialog.open(ShowCodingResultsComponent, {
-      width: '600px',
+      width: '800px',
       data: autoCoder.run(this.mainDataService.codingSchemes)
     });
   }

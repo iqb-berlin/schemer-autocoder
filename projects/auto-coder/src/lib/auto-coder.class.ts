@@ -8,6 +8,17 @@ export class AutoCoder {
   }
 
   run(codingScheme: CodingScheme[]): ResponseData[] {
-    return this.sourceValues
+    const result = this.sourceValues;
+    this.sourceValues.forEach(v => {
+      result.push(v);
+      result.push(v);
+      result.push(v);
+      result.push(v);
+      result.push(v);
+      result.push(v);
+      result.push(v);
+      result.push(v);
+    })
+    return result
   }
 }
