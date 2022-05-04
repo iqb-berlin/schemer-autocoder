@@ -39,7 +39,7 @@
       <mat-form-field class="sources">
         <mat-label>{{ 'derive-sources.prompt' | translate }}</mat-label>
         <mat-chip-list #chipList>
-          <mat-chip *ngIf="codingScheme.deriveSources.length === 0" class="no-sources">{{ 'derive-sources.error' | translate }}</mat-chip>
+          <mat-chip *ngIf="codingScheme.deriveSources.length === 0" [matMenuTriggerFor]="menu" class="no-sources">{{ 'derive-sources.error' | translate }}</mat-chip>
           <mat-chip *ngFor="let source of codingScheme.deriveSources"
                     removable="true" (removed)="deleteDeriveSource(source)">
             {{source}}

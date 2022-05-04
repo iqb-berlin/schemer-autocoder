@@ -19,14 +19,14 @@ export interface CodeData {
 }
 
 export interface CodingScheme {
-  id: string,
-  label: string,
-  sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM',
-  deriveSources: string[],
-  deriveSourceType: 'VALUE' | 'CODE' | 'SCORE',
-  valueTransformations: ValueTransformation[],
-  manualInstruction: string,
-  codes: CodeData[],
+  id: string;
+  label: string;
+  sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM';
+  deriveSources: string[];
+  deriveSourceType: 'VALUE' | 'CODE' | 'SCORE';
+  valueTransformations: ValueTransformation[];
+  manualInstruction: string;
+  codes: CodeData[]
 }
 
 export interface UnitCodingScheme {

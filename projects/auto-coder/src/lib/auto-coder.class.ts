@@ -23,12 +23,15 @@ export class AutoCoder {
       if (usedSources.indexOf(cs.id) < 0) coderVariables.push(new CoderVariableClass(null, cs));
     });
     let changed = true;
-    while (changed) {
+    let cycleCount = 0;
+    while (changed && cycleCount < 1000) {
       changed = false;
+      cycleCount += 1;
       coderVariables.forEach(cv => {
         if (cv.deriveAndCode_changesMade(coderVariables)) changed = true;
       })
     }
+    if (cycleCount >= 1000) console.log('iteration cancelled');
     return coderVariables
   }
 }
