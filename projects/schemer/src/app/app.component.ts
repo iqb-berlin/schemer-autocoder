@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
     </mat-drawer-container>`,
   styles: [
     '.mainView {height: 100%;}'
-  ]})
+  ] })
 export class AppComponent {
   isStandalone = (): boolean => window === window.parent;
   title = 'schemer';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MainDataService} from "../../services/main-data.service";
-import {ResponseData} from "@response-scheme";
-import {AutoCoder} from "@auto-coder";
-import {ShowCodingResultsComponent} from "./show-coding-results.component";
-import {MatDialog} from "@angular/material/dialog";
+import { MainDataService } from '../../services/main-data.service';
+import { ResponseData } from '@response-scheme';
+import { AutoCoder } from '@auto-coder';
+import { ShowCodingResultsComponent } from './show-coding-results.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'schema-checker',
@@ -32,14 +32,14 @@ export class SchemeCheckerComponent implements OnInit {
         myValues.push({
           id: cs.id,
           value: this.values[cs.id],
-          status: "VALUE_CHANGED"
-        })
+          status: 'VALUE_CHANGED'
+        });
       } else {
         myValues.push({
           id: cs.id,
           value: null,
-          status: "NOT_SET"
-        })
+          status: 'NOT_SET'
+        });
       }
     });
     const autoCoder = new AutoCoder(myValues);

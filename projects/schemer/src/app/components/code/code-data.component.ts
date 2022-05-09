@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CodeData, CodingRule, RuleMethod} from "@response-scheme";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {MatDialog} from "@angular/material/dialog";
-import {EditTextComponent} from "../edit-text/edit-text.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { CodeData, CodingRule, RuleMethod } from '@response-scheme';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { EditTextComponent, EditTextData } from '../edit-text/edit-text.component';
 
 @Component({
   selector: 'code-data',
@@ -30,7 +30,7 @@ export class CodeDataComponent implements OnInit {
     if (this.codeData) {
       const dialogRef = this.editTextDialog.open(EditTextComponent, {
         width: '600px',
-        data: {
+        data: <EditTextData>{
           title: `Instruktionen für Code ${this.codeData.id}`,
           text: this.codeData.manualInstruction
         }
@@ -38,10 +38,10 @@ export class CodeDataComponent implements OnInit {
       dialogRef.afterClosed().subscribe(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false && this.codeData) {
-            this.codeData.manualInstruction = dialogResult
+            this.codeData.manualInstruction = dialogResult;
           }
         }
-      })
+      });
     }
   }
 
@@ -54,7 +54,7 @@ export class CodeDataComponent implements OnInit {
         if (!this.hasEmptyRule()) returnSources.push('IS_EMPTY');
         if (!this.hasElseRule()) returnSources.push('ELSE');
       } else {
-        const usedMethods = this.codeData.rules.map((rule) => rule.method);
+        const usedMethods = this.codeData.rules.map(rule => rule.method);
         if (usedMethods.indexOf('ELSE') < 0 && usedMethods.indexOf('IS_EMPTY') < 0) {
           if (usedMethods.indexOf('MATCH') < 0) returnSources.push('MATCH');
           if (usedMethods.indexOf('MATCH_REGEX') < 0) returnSources.push('MATCH_REGEX');
@@ -70,7 +70,7 @@ export class CodeDataComponent implements OnInit {
         }
       }
     }
-    return returnSources
+    return returnSources;
   }
 
   getParamCount(ruleMethod: RuleMethod): number {
@@ -84,7 +84,7 @@ export class CodeDataComponent implements OnInit {
       case 'IS_EMPTY':
         return 0;
     }
-    return 1
+    return 1;
   }
 
   addRule(newRuleMethod: RuleMethod) {
@@ -108,10 +108,10 @@ export class CodeDataComponent implements OnInit {
       if (newArray.indexOf(u) >= 0) {
         notUnique.push(u);
       } else {
-        newArray.push(u)
+        newArray.push(u);
       }
     });
-    return notUnique.indexOf(codeToValidate) < 0
+    return notUnique.indexOf(codeToValidate) < 0;
   }
 
   deleteRule(ruleMethod: RuleMethod) {
@@ -127,9 +127,9 @@ export class CodeDataComponent implements OnInit {
     this.allCodes.forEach(c => {
       c.rules.forEach(r => {
         if (r.method === 'IS_EMPTY') emptyRuleFound = true;
-      })
+      });
     });
-    return emptyRuleFound
+    return emptyRuleFound;
   }
 
   hasElseRule(): boolean {
@@ -137,8 +137,8 @@ export class CodeDataComponent implements OnInit {
     this.allCodes.forEach(c => {
       c.rules.forEach(r => {
         if (r.method === 'ELSE') elseRuleFound = true;
-      })
+      });
     });
-    return elseRuleFound
+    return elseRuleFound;
   }
 }

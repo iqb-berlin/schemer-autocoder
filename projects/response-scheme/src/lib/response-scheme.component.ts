@@ -12,8 +12,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResponseSchemeComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit(): void {
   }
 

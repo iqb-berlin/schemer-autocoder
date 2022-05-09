@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CodeData, CodingScheme, ValueTransformation} from "@response-scheme";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {MatDialog} from "@angular/material/dialog";
-import {EditTextComponent} from "../edit-text/edit-text.component";
+import { Component, Input, OnInit } from '@angular/core';
+import { CodeData, CodingScheme, ValueTransformation } from '@response-scheme';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { EditTextComponent, EditTextData } from '../edit-text/edit-text.component';
 
 @Component({
   selector: 'var-scheme',
@@ -27,7 +27,7 @@ export class CodingSchemeComponent implements OnInit {
       if (this.codingScheme && usedVars.indexOf(v) < 0 && v !== this.codingScheme.id) returnSources.push(v);
     });
     returnSources.sort();
-    return returnSources
+    return returnSources;
   }
 
   deleteDeriveSource(source: string) {
@@ -63,7 +63,7 @@ export class CodingSchemeComponent implements OnInit {
     if (this.codingScheme) {
       const dialogRef = this.editTextDialog.open(EditTextComponent, {
         width: '600px',
-        data: {
+        data: <EditTextData>{
           title: 'Allgemeine Instruktionen',
           text: this.codingScheme.manualInstruction
         }
@@ -71,10 +71,10 @@ export class CodingSchemeComponent implements OnInit {
       dialogRef.afterClosed().subscribe(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false && this.codingScheme) {
-            this.codingScheme.manualInstruction = dialogResult
+            this.codingScheme.manualInstruction = dialogResult;
           }
         }
-      })
+      });
     }
   }
 
@@ -86,7 +86,7 @@ export class CodingSchemeComponent implements OnInit {
         score: 0,
         rules: [],
         manualInstruction: ''
-      })
+      });
     }
   }
 

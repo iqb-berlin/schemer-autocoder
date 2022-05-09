@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {MainDataService} from "../../services/main-data.service";
-import {BasisVariableDef, CodingScheme} from "@response-scheme";
-import {MatDialog} from "@angular/material/dialog";
-import {NewVarSchemeComponent} from "../new-var-scheme.component";
-import {lastValueFrom, map} from "rxjs";
-import {FormGroup} from "@angular/forms";
+import { MainDataService } from '../../services/main-data.service';
+import { BasisVariableDef, CodingScheme } from '@response-scheme';
+import { MatDialog } from '@angular/material/dialog';
+import { NewVarSchemeComponent, NewVarSchemeData } from '../new-var-scheme.component';
+import { lastValueFrom, map } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'schemer-stage',
@@ -36,9 +36,9 @@ export class SchemerStageComponent implements OnInit {
           if (idA < idB) return -1;
           if (idA > idB) return 1;
           return 0;
-        })
+        });
       }
-    })
+    });
   }
 
 
@@ -46,7 +46,7 @@ export class SchemerStageComponent implements OnInit {
     this.selectVarScheme();
     const dialogRef = this.newVarSchemeDialog.open(NewVarSchemeComponent, {
       width: '600px',
-      data: {
+      data: <NewVarSchemeData>{
         title: 'Neue Variable',
         key: '',
         label: ''
@@ -65,12 +65,12 @@ export class SchemerStageComponent implements OnInit {
               valueTransformations: [],
               manualInstruction: '',
               codes: []
-            }
+            };
           }
         }
-        return false
+        return false;
       })
-    ))
+    ));
   }
 
   deleteVarScheme() {
