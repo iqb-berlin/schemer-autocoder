@@ -1,10 +1,12 @@
 {
-  "name": "schemer-autocoder",
-  "version": "0.0.0",
+  "name": "schemer",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --project schemer --output-hashing=none",
+    "pack": "node scripts/wrap_and_pack.js schemer $npm_package_version projects/schemer/src/html_wrapper/index.html",
+    "buildAndPack": "npm run build && npm run pack",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -41,6 +43,7 @@
     "@iqb/eslint-config": "^1.1.1",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "iqb-dev-components": "^1.4.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
