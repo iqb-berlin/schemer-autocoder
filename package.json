@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4203",
     "build": "ng build --project schemer --output-hashing=none",
     "pack": "node scripts/wrap_and_pack.js schemer $npm_package_version projects/schemer/src/html_wrapper/index.html",
     "buildAndPack": "npm run build && npm run pack",
