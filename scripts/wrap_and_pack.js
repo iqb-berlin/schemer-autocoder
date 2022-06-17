@@ -15,5 +15,5 @@ const fileContent = fs.readFileSync(wrapperPath, 'utf8').toString()
   .replace(/version-placeholder/g, packageVersion);
 fs.writeFileSync('dist/index.html', fileContent, 'utf8');
 
-const targetFileName = `verona-${packageName}@${packageVersion}.html`;
+const targetFileName = `verona-schemer-autocoder@${packageVersion}.html`;
 execSync(`node node_modules/iqb-dev-components/src/distpacker.js dist ${targetFileName} ${packageName}`);
