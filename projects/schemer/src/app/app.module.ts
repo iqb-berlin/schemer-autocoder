@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+import { DoBootstrap, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SchemerToolbarComponent } from './components/schemer-toolbar.component';
@@ -29,6 +28,7 @@ import { CodeDataComponent } from './components/code/code-data.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
 import { ShowCodingResultsComponent } from './components/scheme-checker/show-coding-results.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
@@ -74,8 +74,13 @@ import { ShowCodingResultsComponent } from './components/scheme-checker/show-cod
     NewVarSchemeComponent,
     EditTextComponent,
     ShowCodingResultsComponent
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  ]
 })
-export class AppModule { }
+
+export class AppModule implements DoBootstrap {
+  constructor(private injector: Injector) {}
+  ngDoBootstrap(): void {
+    const schemer = createCustomElement(AppComponent, { injector: this.injector });
+    customElements.define('app-root', schemer);
+  }
+}
