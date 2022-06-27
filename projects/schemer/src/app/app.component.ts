@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { VeronaAPIService, VosStartCommand } from './services/verona-api.service';
-import { MetaDataService } from './services/meta-data.service';
-import { MainDataService } from './services/main-data.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -24,32 +21,7 @@ import { MainDataService } from './services/main-data.service';
   styles: [
     '.mainView {height: 100%;}'
   ] })
-export class AppComponent implements OnInit {
+export class AppComponent {
   isStandalone: boolean = window === window.parent;
   title = 'schemer';
-
-  constructor(private veronaAPIService: VeronaAPIService,
-              private metaDataService: MetaDataService,
-              private mainDataService: MainDataService) {
-  }
-
-  ngOnInit(): void {
-    this.veronaAPIService.sendVosReadyNotification(this.metaDataService.metadata);
-    this.veronaAPIService.vosStartCommand
-      .subscribe((message: VosStartCommand) => this.setVariables(message));
-  }
-
-  private setVariables(message: VosStartCommand): void {
-    this.mainDataService.selectedScheme$.next(null);
-    this.mainDataService.varList = message.variables;
-    this.mainDataService.codingSchemes = [];
-    this.mainDataService.varList.sort(function (a, b) {
-      const idA = a.id.toUpperCase();
-      const idB = b.id.toUpperCase();
-      if (idA < idB) return -1;
-      if (idA > idB) return 1;
-      return 0;
-    });
-    this.mainDataService.syncVariables();
-  }
 }
