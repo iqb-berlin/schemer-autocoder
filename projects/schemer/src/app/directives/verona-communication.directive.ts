@@ -28,15 +28,8 @@ export class VeronaCommunicationDirective implements OnInit, OnDestroy {
 
   private setVariables(message: VosStartCommand): void {
     this.mainDataService.selectedScheme$.next(null);
-    this.mainDataService.varList = message.variables;
+    this.mainDataService.setSortedVarList(message.variables);
     this.mainDataService.codingSchemes = [];
-    this.mainDataService.varList.sort(function (a, b) {
-      const idA = a.id.toUpperCase();
-      const idB = b.id.toUpperCase();
-      if (idA < idB) return -1;
-      if (idA > idB) return 1;
-      return 0;
-    });
     this.mainDataService.syncVariables();
   }
 
