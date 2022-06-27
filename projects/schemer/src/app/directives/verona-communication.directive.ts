@@ -18,18 +18,17 @@ export class VeronaCommunicationDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.veronaAPIService.sendVosReadyNotification(this.metaDataService.metadata);
     this.veronaAPIService.vosStartCommand
-      .subscribe((message: VosStartCommand) => this.setVariables(message));
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((message: VosStartCommand) => this.initMainDataService(message));
     this.mainDataService.codingSchemesChanged
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(scheme => this.veronaAPIService
-        .sendVosSchemeChangedNotification( scheme));
-
+      .subscribe(scheme => this.veronaAPIService.sendVosSchemeChangedNotification( scheme));
   }
 
-  private setVariables(message: VosStartCommand): void {
+  private initMainDataService(message: VosStartCommand): void {
     this.mainDataService.selectedScheme$.next(null);
     this.mainDataService.setSortedVarList(message.variables);
-    this.mainDataService.codingSchemes = [];
+    this.mainDataService.codingSchemes = message.codingScheme ? JSON.parse(message.codingScheme) : [];
     this.mainDataService.syncVariables();
   }
 
@@ -37,5 +36,4 @@ export class VeronaCommunicationDirective implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
 }
