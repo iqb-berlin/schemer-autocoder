@@ -9,7 +9,7 @@ import { MainDataService } from './services/main-data.service';
     <mat-drawer-container class="mainView" fxLayout="column" autosize hasBackdrop="false">
       <schemer-toolbar *ngIf="isStandalone" (toggleDrawerClick)="drawer.toggle()"></schemer-toolbar>
       <div fxLayout="row">
-        <schemer-stage fxFlex></schemer-stage>
+        <schemer-stage appVeronaCommunication fxFlex></schemer-stage>
         <mat-drawer #drawer mode="over" fxFlex="400px" fxLayout="column">
           <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
             Antwortschema prüfen

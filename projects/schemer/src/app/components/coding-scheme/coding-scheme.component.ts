@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CodeData, CodingScheme, ValueTransformation } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,8 @@ import { EditTextComponent, EditTextData } from '../edit-text/edit-text.componen
   styleUrls: ['./coding-scheme.component.scss']
 })
 export class CodingSchemeComponent implements OnInit {
+  @Output() codingSchemeChanged = new EventEmitter<CodingScheme | null>();
+
   @Input() codingScheme: CodingScheme | null = null;
   @Input() allVariables: string[] = [];
 
@@ -34,6 +36,7 @@ export class CodingSchemeComponent implements OnInit {
     if (this.codingScheme) {
       const sourcePos = this.codingScheme.deriveSources.indexOf(source);
       if (sourcePos >= 0) this.codingScheme.deriveSources.splice(sourcePos, 1);
+      this.setCodingSchemeChanged();
     }
   }
 
@@ -41,6 +44,7 @@ export class CodingSchemeComponent implements OnInit {
     if (this.codingScheme) {
       this.codingScheme.deriveSources.push(v);
       this.codingScheme.deriveSources.sort();
+      this.setCodingSchemeChanged();
     }
   }
 
@@ -52,6 +56,7 @@ export class CodingSchemeComponent implements OnInit {
       } else if (!checked && transPos >= 0) {
         this.codingScheme.valueTransformations.splice(transPos, 1);
       }
+      this.setCodingSchemeChanged();
     }
   }
 
@@ -72,6 +77,7 @@ export class CodingSchemeComponent implements OnInit {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false && this.codingScheme) {
             this.codingScheme.manualInstruction = dialogResult;
+            this.setCodingSchemeChanged();
           }
         }
       });
@@ -87,7 +93,12 @@ export class CodingSchemeComponent implements OnInit {
         rules: [],
         manualInstruction: ''
       });
+      this.setCodingSchemeChanged();
     }
+  }
+
+  setCodingSchemeChanged(): void {
+    this.codingSchemeChanged.emit(this.codingScheme);
   }
 
   deleteCode(codeToDeleteId: number) {
@@ -97,6 +108,7 @@ export class CodingSchemeComponent implements OnInit {
         if (c.id === codeToDeleteId) codePos = i;
       });
       if (codePos >= 0) this.codingScheme.codes.splice(codePos, 1);
+      this.setCodingSchemeChanged();
     }
   }
 }

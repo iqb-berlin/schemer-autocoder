@@ -29,14 +29,7 @@ export class SchemerStageComponent implements OnInit {
   addVarScheme() {
     this.addVarSchemeDialog().then((newVarScheme: CodingScheme | boolean) => {
       if (typeof newVarScheme !== 'boolean') {
-        this.mainDataService.codingSchemes.push(newVarScheme);
-        this.mainDataService.codingSchemes.sort(function (a, b) {
-          const idA = a.id.toUpperCase();
-          const idB = b.id.toUpperCase();
-          if (idA < idB) return -1;
-          if (idA > idB) return 1;
-          return 0;
-        });
+        this.mainDataService.addCodingScheme(newVarScheme);
       }
     });
   }

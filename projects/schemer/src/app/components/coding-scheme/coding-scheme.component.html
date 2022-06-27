@@ -94,7 +94,10 @@
   <div fxLayout="column" fxLayoutGap="10px">
     <h3>{{'code.header' | translate}}</h3>
     <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let cd of codingScheme.codes" fxLayoutGap="10px">
-      <code-data [codeData]="cd" [allCodes]="codingScheme.codes" fxFlex></code-data>
+      <code-data fxFlex
+                 [codeData]="cd"
+                 [allCodes]="codingScheme.codes"
+                 (codeDataChanged)="setCodingSchemeChanged()"></code-data>
       <button mat-raised-button (click)="deleteCode(cd.id)" [matTooltip]="'code.prompt.delete' | translate">
         <mat-icon>delete</mat-icon>
       </button>
