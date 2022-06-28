@@ -29,6 +29,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
 import { ShowCodingResultsComponent } from './components/scheme-checker/show-coding-results.component';
 import { createCustomElement } from '@angular/elements';
+import { VeronaCommunicationDirective } from './directives/verona-communication.directive';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { createCustomElement } from '@angular/elements';
     EditTextComponent,
     CodeDataComponent,
     ShowCodingResultsComponent,
-    SchemeCheckerComponent
+    SchemeCheckerComponent,
+    VeronaCommunicationDirective
   ],
   imports: [
     BrowserModule,

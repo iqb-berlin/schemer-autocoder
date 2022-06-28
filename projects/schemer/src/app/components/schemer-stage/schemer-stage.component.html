@@ -57,7 +57,7 @@
     </div>
   </div>
   <var-scheme [codingScheme]="mainDataService.selectedScheme$ | async" fxFlex class="var-scheme-container"
-              [allVariables]="mainDataService.allCodingSchemeIds(mainDataService.codingSchemes)">
-
+              [allVariables]="mainDataService.allCodingSchemeIds(mainDataService.codingSchemes)"
+              (codingSchemeChanged)="mainDataService.setCodingSchemesChanged()">
   </var-scheme>
 </div>

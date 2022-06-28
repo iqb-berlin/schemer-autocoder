@@ -1,5 +1,3 @@
-import { BasisVariableDef } from './basis-variable-def';
-
 export type RuleMethod = 'MATCH' | 'MATCH_REGEX' | 'NUMERIC_RANGE' | 'NUMERIC_LESS_THEN' | 'NUMERIC_MORE_THEN' |
 'NUMERIC_MAX' | 'NUMERIC_MIN' | 'IS_EMPTY' | 'ELSE';
 
@@ -29,8 +27,3 @@ export interface CodingScheme {
   codes: CodeData[]
 }
 
-export interface UnitCodingScheme {
-  generalInstructions: string,
-  basisVariables: BasisVariableDef[],
-  codingScheme: CodingScheme[]
-}

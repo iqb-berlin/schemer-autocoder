@@ -1,13 +1,25 @@
 <div fxLayout="column" *ngIf="codeData" fxLayoutGap="5px">
   <div fxLayout="row" fxLayoutGap="10px" class="code-main-data">
     <mat-form-field fxFlex="140px" [class]="uniqueNumberValidator(codeData.id) ? '' : 'not-unique-id'">
-      <input matInput [placeholder]="'code.id' | translate" [(ngModel)]="codeData.id" type="number">
+      <input matInput
+             [placeholder]="'code.id' | translate"
+             [(ngModel)]="codeData.id"
+             (ngModelChange)="setCodeDataChanged()"
+             type="number">
     </mat-form-field>
     <mat-form-field fxFlex>
-      <input matInput [placeholder]="'code.description' | translate" [(ngModel)]="codeData.label">
+      <input matInput
+             [placeholder]="'code.description' | translate"
+             [(ngModel)]="codeData.label"
+             (ngModelChange)="setCodeDataChanged()">
     </mat-form-field>
     <mat-form-field fxFlex="140px">
-      <input matInput [placeholder]="'code.score' | translate" [(ngModel)]="codeData.score" type="number" required>
+      <input matInput
+             type="number"
+             required
+             [placeholder]="'code.score' | translate"
+             [(ngModel)]="codeData.score"
+             (ngModelChange)="setCodeDataChanged()">
     </mat-form-field>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
@@ -21,17 +33,23 @@
                  matTooltipShowDelay="500">
               {{('rule.' + rule.method) | translate}}</div>
             <mat-form-field *ngIf="getParamCount(rule.method) < 0" fxFlex>
-              <textarea matInput [(ngModel)]="rule.parameters[0]"
+              <textarea matInput
+                        [(ngModel)]="rule.parameters[0]"
+                        (ngModelChange)="setCodeDataChanged()"
                         cdkTextareaAutosize
                         #autosize="cdkTextareaAutosize"
                         cdkAutosizeMinRows="2"
                         cdkAutosizeMaxRows="8"></textarea>
             </mat-form-field>
             <mat-form-field fxFlex="80px" *ngIf="getParamCount(rule.method) > 0">
-              <input matInput [(ngModel)]="rule.parameters[0]">
+              <input matInput
+                     [(ngModel)]="rule.parameters[0]"
+                     (ngModelChange)="setCodeDataChanged()">
             </mat-form-field>
             <mat-form-field fxFlex="80px" *ngIf="getParamCount(rule.method) > 1">
-              <input matInput [(ngModel)]="rule.parameters[1]">
+              <input matInput
+                     [(ngModel)]="rule.parameters[1]"
+                     (ngModelChange)="setCodeDataChanged()">
             </mat-form-field>
           </div>
           <div fxFlex="30px">

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CodeData, CodingRule, RuleMethod } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { EditTextComponent, EditTextData } from '../edit-text/edit-text.componen
   styleUrls: ['./code-data.component.scss']
 })
 export class CodeDataComponent implements OnInit {
+  @Output() codeDataChanged = new EventEmitter<CodeData[]>();
   @Input() codeData: CodeData | null = null;
   @Input() allCodes: CodeData[] = [];
   showCodeButtonsOf = '';
@@ -39,6 +40,7 @@ export class CodeDataComponent implements OnInit {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false && this.codeData) {
             this.codeData.manualInstruction = dialogResult;
+            this.setCodeDataChanged();
           }
         }
       });
@@ -97,6 +99,7 @@ export class CodeDataComponent implements OnInit {
       if (paramCount !== 0) newRule.parameters.push('');
       if (paramCount > 1) newRule.parameters.push('');
       this.codeData.rules.push(newRule);
+      this.setCodeDataChanged();
     }
   }
 
@@ -119,6 +122,7 @@ export class CodeDataComponent implements OnInit {
       const ruleMethods = this.codeData.rules.map(r => r.method);
       const methodIndex = ruleMethods.indexOf(ruleMethod);
       if (methodIndex >= 0) this.codeData.rules.splice(methodIndex, 1);
+      this.setCodeDataChanged();
     }
   }
 
@@ -140,5 +144,9 @@ export class CodeDataComponent implements OnInit {
       });
     });
     return elseRuleFound;
+  }
+
+  setCodeDataChanged() {
+    this.codeDataChanged.emit(this.allCodes);
   }
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "radio_1",
+    "type": "integer",
+    "format": "",
+    "multiple": false,
+    "nullable": true,
+    "values": [
+      {
+        "value": "1",
+        "label": "1"
+      },
+      {
+        "value": "2",
+        "label": "1"
+      }
+    ],
+    "valuesComplete": true
+  },
+  {
+    "id": "radio_2",
+    "type": "integer",
+    "format": "",
+    "multiple": false,
+    "nullable": true,
+    "values": [
+      {
+        "value": "1",
+        "label": "1"
+      },
+      {
+        "value": "2",
+        "label": "2"
+      }
+    ],
+    "valuesComplete": true
+  }
+]
