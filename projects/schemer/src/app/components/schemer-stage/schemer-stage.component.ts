@@ -4,7 +4,7 @@ import { BasisVariableDef, CodingScheme } from '@response-scheme';
 import { MatDialog } from '@angular/material/dialog';
 import { NewVarSchemeComponent, NewVarSchemeData } from '../new-var-scheme.component';
 import { lastValueFrom, map } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'schemer-stage',
@@ -50,8 +50,8 @@ export class SchemerStageComponent implements OnInit {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false) {
             return <CodingScheme>{
-              id: (<FormGroup>dialogResult).get('key')?.value.trim(),
-              label: (<FormGroup>dialogResult).get('label')?.value.trim(),
+              id: (<UntypedFormGroup>dialogResult).get('key')?.value.trim(),
+              label: (<UntypedFormGroup>dialogResult).get('label')?.value.trim(),
               sourceType: 'DERIVE_CONCAT',
               deriveSources: [],
               deriveSourceType: 'CODE',

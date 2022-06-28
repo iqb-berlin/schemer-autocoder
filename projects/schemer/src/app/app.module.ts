@@ -71,11 +71,6 @@ import { VeronaCommunicationDirective } from './directives/verona-communication.
     MatCheckboxModule,
     MatCardModule,
     MatSidenavModule
-  ],
-  entryComponents: [
-    NewVarSchemeComponent,
-    EditTextComponent,
-    ShowCodingResultsComponent
   ]
 })
 
