@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CodeData, CodingRule, RuleMethod } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { EditTextComponent, EditTextData } from '../edit-text/edit-text.component';
+import {TranslateService} from "@ngx-translate/core";
+import {RichTextEditDialogComponent} from "../rich-text-editor/rich-text-edit-dialog.component";
 
 @Component({
   selector: 'code-data',
@@ -17,6 +18,7 @@ export class CodeDataComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
+    private translateService: TranslateService,
     private editTextDialog: MatDialog
   ) { }
 
@@ -29,12 +31,15 @@ export class CodeDataComponent implements OnInit {
 
   editTextDialog_manualInstruction(): void {
     if (this.codeData) {
-      const dialogRef = this.editTextDialog.open(EditTextComponent, {
-        width: '600px',
-        data: <EditTextData>{
-          title: `Instruktionen für Code ${this.codeData.id}`,
-          text: this.codeData.manualInstruction
-        }
+      const dialogRef = this.editTextDialog.open(RichTextEditDialogComponent, {
+        width: '860px',
+        data: {
+          title: this.translateService.instant('manual-instruction.prompt-code'),
+          content: this.codeData.manualInstruction || '',
+          defaultFontSize: 20,
+          editorHeightPx: 400
+        },
+        autoFocus: false
       });
       dialogRef.afterClosed().subscribe(dialogResult => {
         if (typeof dialogResult !== 'undefined') {

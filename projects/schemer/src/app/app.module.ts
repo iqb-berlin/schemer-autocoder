@@ -23,13 +23,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
-import { EditTextComponent } from './components/edit-text/edit-text.component';
 import { CodeDataComponent } from './components/code/code-data.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
 import { ShowCodingResultsComponent } from './components/scheme-checker/show-coding-results.component';
 import { createCustomElement } from '@angular/elements';
 import { VeronaCommunicationDirective } from './directives/verona-communication.directive';
+import { RichTextEditorComponent } from './components/rich-text-editor/rich-text-editor.component';
+import { RichTextEditDialogComponent } from './components/rich-text-editor/rich-text-edit-dialog.component';
+import { NgxTiptapModule } from 'ngx-tiptap';
 
 @NgModule({
   declarations: [
@@ -38,11 +40,12 @@ import { VeronaCommunicationDirective } from './directives/verona-communication.
     SchemerStageComponent,
     CodingSchemeComponent,
     NewVarSchemeComponent,
-    EditTextComponent,
     CodeDataComponent,
     ShowCodingResultsComponent,
     SchemeCheckerComponent,
-    VeronaCommunicationDirective
+    VeronaCommunicationDirective,
+    RichTextEditorComponent,
+    RichTextEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { VeronaCommunicationDirective } from './directives/verona-communication.
     MatChipsModule,
     MatCheckboxModule,
     MatCardModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxTiptapModule
   ]
 })
 

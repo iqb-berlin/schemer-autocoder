@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CodeData, CodingScheme, ValueTransformation } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { EditTextComponent, EditTextData } from '../edit-text/edit-text.component';
+import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'var-scheme',
@@ -17,6 +18,7 @@ export class CodingSchemeComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
+    private translateService: TranslateService,
     private editTextDialog: MatDialog
   ) { }
 
@@ -66,12 +68,15 @@ export class CodingSchemeComponent implements OnInit {
 
   editTextDialog_manualInstruction(): void {
     if (this.codingScheme) {
-      const dialogRef = this.editTextDialog.open(EditTextComponent, {
-        width: '600px',
-        data: <EditTextData>{
-          title: 'Allgemeine Instruktionen',
-          text: this.codingScheme.manualInstruction
-        }
+      const dialogRef = this.editTextDialog.open(RichTextEditDialogComponent, {
+        width: '860px',
+        data: {
+          title: this.translateService.instant('manual-instruction.prompt-general'),
+          content: this.codingScheme.manualInstruction || '',
+          defaultFontSize: 20,
+          editorHeightPx: 550
+        },
+        autoFocus: false
       });
       dialogRef.afterClosed().subscribe(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
