@@ -1,6 +1,6 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row" fxLayoutGap="10px">
-    <mat-form-field fxFlex="280px">
+    <mat-form-field fxFlex="220px">
       <input matInput [placeholder]="'id' | translate" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
     </mat-form-field>
     <mat-form-field fxFlex>
@@ -58,25 +58,31 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
-    <mat-card fxFlex="280px">
+    <mat-card fxFlex="220px">
       <mat-card-subtitle>{{'value-transformation.prompt' | translate}}</mat-card-subtitle>
-      <mat-card-content fxLayout="column">
+      <mat-card-content fxLayout="column" fxLayoutGap="6px">
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('TO_UPPER') >= 0) : false"
                       (change)="alterValueTransformation('TO_UPPER', $event.checked)">
-          {{'value-transformation.TO_UPPER' | translate}}
+          <div [style.white-space]="'normal'" [style.line-height]="1.2">
+            {{'value-transformation.TO_UPPER' | translate}}
+          </div>
         </mat-checkbox>
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('REMOVE_WHITE_SPACES') >= 0) : false"
                       (change)="alterValueTransformation('REMOVE_WHITE_SPACES', $event.checked)">
-          {{'value-transformation.REMOVE_WHITE_SPACES' | translate}}
+          <div [style.white-space]="'normal'" [style.line-height]="1.2">
+            {{'value-transformation.REMOVE_WHITE_SPACES' | translate}}
+          </div>
         </mat-checkbox>
+        <!--
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('DATE_TO_ISO') >= 0) : false"
-                      (change)="alterValueTransformation('DATE_TO_ISO', $event.checked)" disabled="disabled">
+                      (change)="alterValueTransformation('DATE_TO_ISO', $event.checked)">
           {{'value-transformation.DATE_TO_ISO' | translate}}
         </mat-checkbox>
         <mat-checkbox [checked]="codingScheme ? (codingScheme.valueTransformations.indexOf('TIME_TO_ISO') >= 0) : false"
-                      (change)="alterValueTransformation('TIME_TO_ISO', $event.checked)" disabled="disabled">
+                      (change)="alterValueTransformation('TIME_TO_ISO', $event.checked)">
           {{'value-transformation.TIME_TO_ISO' | translate}}
         </mat-checkbox>
+        -->
       </mat-card-content>
     </mat-card>
     <mat-card fxFlex>

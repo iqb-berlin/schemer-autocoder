@@ -20,6 +20,7 @@ export class SchemerStageComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainDataService.syncVariables();
+    if (window === window.parent) document.documentElement.style.setProperty('--schemer-top-margin', '64px');
   }
 
   selectVarScheme(varScheme: CodingScheme | null = null) {
