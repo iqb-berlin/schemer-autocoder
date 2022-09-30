@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CodeData, CodingScheme, ValueTransformation } from '@response-scheme';
+import { CodeData, VariableCodingData, ValueTransformation } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
@@ -11,9 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./coding-scheme.component.scss']
 })
 export class CodingSchemeComponent implements OnInit {
-  @Output() codingSchemeChanged = new EventEmitter<CodingScheme | null>();
+  @Output() codingSchemeChanged = new EventEmitter<VariableCodingData | null>();
 
-  @Input() codingScheme: CodingScheme | null = null;
+  @Input() codingScheme: VariableCodingData | null = null;
   @Input() allVariables: string[] = [];
 
   constructor(

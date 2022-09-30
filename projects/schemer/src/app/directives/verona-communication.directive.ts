@@ -20,19 +20,26 @@ export class VeronaCommunicationDirective implements OnInit, OnDestroy {
     this.veronaAPIService.vosStartCommand
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((message: VosStartCommand) => this.initMainDataService(message));
-    this.veronaAPIService.vosGetSchemeRequest
+    this.mainDataService.codingSchemeChanged
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => this.veronaAPIService
-        .sendVosSchemeChangedNotification(this.mainDataService.codingSchemes));
-    this.mainDataService.codingSchemesChanged
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(scheme => this.veronaAPIService.sendVosSchemeChangedNotification(scheme));
+      .subscribe(scheme => this.veronaAPIService.sendVosSchemeChangedNotification({
+        variableCodings: scheme
+      }));
   }
 
   private initMainDataService(message: VosStartCommand): void {
-    this.mainDataService.selectedScheme$.next(null);
-    this.mainDataService.setSortedVarList(message.variables);
-    this.mainDataService.codingSchemes = message.codingScheme ? JSON.parse(message.codingScheme) : [];
+    this.mainDataService.selectedCoding$.next(null);
+    this.mainDataService.variableCodingData = [];
+    this.mainDataService.invalidDataFormat = '';
+    this.mainDataService.setSortedVarList(message.variables || []);
+    if (message.codingScheme) {
+      if (!message.codingSchemeType || message.codingSchemeType === 'iqb@1.1') {
+        const codingScheme = JSON.parse(message.codingScheme);
+        this.mainDataService.variableCodingData = codingScheme.variableCodings
+      } else {
+        this.mainDataService.invalidDataFormat = message.codingSchemeType
+      }
+    }
     this.mainDataService.syncVariables();
   }
 

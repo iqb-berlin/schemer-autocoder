@@ -27,7 +27,7 @@ export class SchemeCheckerComponent implements OnInit {
 
   startEvaluation() {
     const myValues: ResponseData[] = [];
-    this.mainDataService.filteredCodingSchemes(this.mainDataService.codingSchemes, true).forEach(cs => {
+    this.mainDataService.filteredCodings(this.mainDataService.variableCodingData, true).forEach(cs => {
       if (this.values[cs.id]) {
         myValues.push({
           id: cs.id,
@@ -45,7 +45,7 @@ export class SchemeCheckerComponent implements OnInit {
     const autoCoder = new AutoCoder(myValues);
     this.showCodingResultsDialog.open(ShowCodingResultsComponent, {
       width: '800px',
-      data: autoCoder.run(this.mainDataService.codingSchemes)
+      data: autoCoder.run(this.mainDataService.variableCodingData)
     });
   }
 }

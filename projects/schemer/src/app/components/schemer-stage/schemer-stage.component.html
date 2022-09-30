@@ -1,25 +1,22 @@
 <div class="scheme-body" fxLayout="row" fxLayoutAlign="space-between stretch">
-  <p *ngIf="mainDataService.varList.length === 0" style="margin: 20px;">Keine Basis-Variablen definiert.</p>
+  <p *ngIf="!mainDataService.invalidDataFormat && mainDataService.varList.length === 0" style="margin: 20px;">{{'data-error.base-variables-missing' | translate}}</p>
   <div class="navi-bar" fxLayout="column" fxFlex="200px" *ngIf="mainDataService.varList.length > 0">
     <div fxFlex class="var-scheme-list">
       <div class="basic-var-list-header">Basisvariablen</div>
-      <mat-nav-list *ngFor="let varBasic of mainDataService.filteredCodingSchemes(mainDataService.codingSchemes, true)">
+      <mat-nav-list *ngFor="let varBasic of mainDataService.filteredCodings(mainDataService.variableCodingData, true)">
         <a mat-list-item style="height: 22px;text-overflow: ellipsis"
            class="var-list-entry"
-           [matTooltip]="varBasic.id"
-           [class]="varBasic.id === (mainDataService.selectedScheme$ | async)?.id ? 'selected' : 'not-selected'"
+           [class]="varBasic.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'"
            (click)="selectVarScheme(varBasic)">
           {{ varBasic.id }}
         </a>
       </mat-nav-list>
       <div class="var-scheme-list-header">Abgeleitete Variablen</div>
-      <p *ngIf="mainDataService.codingSchemes.length === 0" style="margin: 4px;">Keine abgeleiteten Variablen definiert.</p>
-      <mat-nav-list *ngFor="let varScheme of mainDataService.filteredCodingSchemes(mainDataService.codingSchemes, false)">
+      <mat-nav-list *ngFor="let varScheme of mainDataService.filteredCodings(mainDataService.variableCodingData, false)">
         <a mat-list-item style="height: 22px;text-overflow: ellipsis"
            class="var-list-entry"
-           [matTooltip]="varScheme.id"
            (click)="selectVarScheme(varScheme)"
-           [class]="varScheme.id === (mainDataService.selectedScheme$ | async)?.id ? 'selected' : 'not-selected'">
+           [class]="varScheme.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'">
           {{ varScheme.id }}
         </a>
       </mat-nav-list>
@@ -56,8 +53,14 @@
       </mat-menu>
     </div>
   </div>
-  <var-scheme [codingScheme]="mainDataService.selectedScheme$ | async" fxFlex class="var-scheme-container"
-              [allVariables]="mainDataService.allCodingSchemeIds(mainDataService.codingSchemes)"
+  <div *ngIf="mainDataService.invalidDataFormat" class="invalid-data-format" fxFlex>
+    <p>{{ 'data-error.invalid-format' | translate}}: {{mainDataService.invalidDataFormat}}</p>
+    <button mat-raised-button (click)="resetScheme()">Alle Daten des Kodierschemas löschen</button>
+  </div>
+
+  <var-scheme [codingScheme]="mainDataService.selectedCoding$ | async" fxFlex class="var-scheme-container"
+              *ngIf="!mainDataService.invalidDataFormat"
+              [allVariables]="mainDataService.allCodings(mainDataService.variableCodingData)"
               (codingSchemeChanged)="mainDataService.setCodingSchemesChanged()">
   </var-scheme>
 </div>

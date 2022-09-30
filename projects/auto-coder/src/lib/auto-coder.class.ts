@@ -1,4 +1,4 @@
-import { CodingScheme, ResponseData } from '@response-scheme';
+import { VariableCodingData, ResponseData } from '@response-scheme';
 import { CoderVariableClass } from './coder-variable.class';
 
 export class AutoCoder {
@@ -9,11 +9,11 @@ export class AutoCoder {
     this.sourceValues = sourceValues;
   }
 
-  run(codingScheme: CodingScheme[]): ResponseData[] {
+  run(codingScheme: VariableCodingData[]): ResponseData[] {
     const usedSources: string[] = [];
     const coderVariables: CoderVariableClass[] = [];
     this.sourceValues.forEach(v => {
-      let myCodingScheme: CodingScheme | null = null;
+      let myCodingScheme: VariableCodingData | null = null;
       codingScheme.forEach(cs => {
         if (cs.id === v.id) myCodingScheme = cs;
       });

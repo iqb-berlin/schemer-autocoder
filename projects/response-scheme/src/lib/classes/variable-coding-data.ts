@@ -16,7 +16,7 @@ export interface CodeData {
   manualInstruction: string
 }
 
-export interface CodingScheme {
+export interface VariableCodingData {
   id: string;
   label: string;
   sourceType: 'BASE' | 'DERIVE_CONCAT' | 'DERIVE_SUM';
@@ -24,6 +24,9 @@ export interface CodingScheme {
   deriveSourceType: 'VALUE' | 'CODE' | 'SCORE';
   valueTransformations: ValueTransformation[];
   manualInstruction: string;
-  codes: CodeData[]
+  codes: CodeData[];
 }
 
+export interface CodingSchemeDto {
+  variableCodings: VariableCodingData[]
+}

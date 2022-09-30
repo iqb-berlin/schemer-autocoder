@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainDataService } from '../../services/main-data.service';
-import { BasisVariableDef, CodingScheme } from '@response-scheme';
+import { VariableInfo, VariableCodingData } from '@response-scheme';
 import { MatDialog } from '@angular/material/dialog';
 import { NewVarSchemeComponent, NewVarSchemeData } from '../new-var-scheme.component';
 import { lastValueFrom, map } from 'rxjs';
@@ -23,20 +23,25 @@ export class SchemerStageComponent implements OnInit {
     if (window === window.parent) document.documentElement.style.setProperty('--schemer-top-margin', '64px');
   }
 
-  selectVarScheme(varScheme: CodingScheme | null = null) {
-    this.mainDataService.selectedScheme$.next(varScheme);
+  selectVarScheme(varScheme: VariableCodingData | null = null) {
+    this.mainDataService.selectedCoding$.next(varScheme);
   }
 
   addVarScheme() {
-    this.addVarSchemeDialog().then((newVarScheme: CodingScheme | boolean) => {
+    this.addVarSchemeDialog().then((newVarScheme: VariableCodingData | boolean) => {
       if (typeof newVarScheme !== 'boolean') {
-        this.mainDataService.addCodingScheme(newVarScheme);
+        this.mainDataService.addCoding(newVarScheme);
       }
     });
   }
 
+  resetScheme() {
+    this.mainDataService.selectedCoding$.next(null);
+    this.mainDataService.invalidDataFormat = '';
+    this.mainDataService.codingSchemeChanged.emit(this.mainDataService.variableCodingData);
+  }
 
-  async addVarSchemeDialog(): Promise<CodingScheme | boolean> {
+  async addVarSchemeDialog(): Promise<VariableCodingData | boolean> {
     this.selectVarScheme();
     const dialogRef = this.newVarSchemeDialog.open(NewVarSchemeComponent, {
       width: '600px',
@@ -50,7 +55,7 @@ export class SchemerStageComponent implements OnInit {
       map(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false) {
-            return <CodingScheme>{
+            return <VariableCodingData>{
               id: (<UntypedFormGroup>dialogResult).get('key')?.value.trim(),
               label: (<UntypedFormGroup>dialogResult).get('label')?.value.trim(),
               sourceType: 'DERIVE_CONCAT',
@@ -71,7 +76,7 @@ export class SchemerStageComponent implements OnInit {
 
   }
 
-  showBasicVarDetails(varBasic: BasisVariableDef) {
+  showBasicVarDetails(varBasic: VariableInfo) {
     alert(`Details für Basisvariable ${varBasic.id}`);
   }
 }
