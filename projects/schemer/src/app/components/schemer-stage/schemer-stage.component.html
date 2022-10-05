@@ -31,16 +31,20 @@
     </div>
     <!-- # # # # # # # # # # # # # # # # # # # # # # # # -->
     <div fxLayout="row" class="var-list-buttons">
-      <button mat-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="33">
+      <button mat-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="25">
         <mat-icon>add</mat-icon>
       </button>
       <button mat-button [disabled]="(mainDataService.selectedCoding$ | async) === null || ((mainDataService.selectedCoding$ | async)?.sourceType === 'BASE' && (mainDataService.selectedCoding$ | async)?.status !== 'INVALID_SOURCE')"
-              (click)="deleteVarScheme()" matTooltip="Variable löschen" matTooltipPosition="above" fxFlex="33">
+              (click)="deleteVarScheme()" matTooltip="Variable löschen" matTooltipPosition="above" fxFlex="25">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-button [disabled]="(mainDataService.selectedCoding$ | async) === null || (mainDataService.selectedCoding$ | async)?.sourceType === 'BASE'"
-              (click)="renameVarScheme()" matTooltip="Variable umbenennen" matTooltipPosition="above" fxFlex>
+              (click)="renameVarScheme()" matTooltip="Variable umbenennen" matTooltipPosition="above" fxFlex="25">
         <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-button [disabled]="(mainDataService.selectedCoding$ | async) === null"
+              (click)="copyVarScheme()" matTooltip="Kodierung kopieren" matTooltipPosition="above" fxFlex>
+        <mat-icon>content_copy</mat-icon>
       </button>
     </div>
   </div>

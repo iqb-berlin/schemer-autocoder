@@ -34,6 +34,7 @@ import { NgxTiptapModule } from 'ngx-tiptap';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog.component';
 import { MessageDialogComponent } from './components/dialogs/message-dialog.component';
 import { SimpleInputDialogComponent } from './components/dialogs/simple-input-dialog.component';
+import { SelectVariableDialogComponent } from './components/dialogs/select-variable-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { SimpleInputDialogComponent } from './components/dialogs/simple-input-di
     ConfirmDialogComponent,
     MessageDialogComponent,
     SimpleInputDialogComponent,
+    SelectVariableDialogComponent,
     RichTextEditorComponent,
     RichTextEditDialogComponent
   ],

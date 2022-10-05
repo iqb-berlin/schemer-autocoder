@@ -6,6 +6,7 @@ import { ConfirmDialogComponent, ConfirmDialogData } from '../dialogs/confirm-di
 import { MessageDialogComponent, MessageDialogData, MessageType } from '../dialogs/message-dialog.component';
 import { SimpleInputDialogComponent, SimpleInputDialogData } from '../dialogs/simple-input-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectVariableDialogComponent, SelectVariableDialogData } from '../dialogs/select-variable-dialog.component';
 
 @Component({
   selector: 'schemer-stage',
@@ -20,6 +21,7 @@ export class SchemerStageComponent implements OnInit {
     private translateService: TranslateService,
     private confirmDialog: MatDialog,
     private messageDialog: MatDialog,
+    private selectVariableDialog: MatDialog,
     private inputDialog: MatDialog
   ) { }
 
@@ -138,6 +140,27 @@ export class SchemerStageComponent implements OnInit {
           title: 'Variable umbenennen',
           content: 'Bitte erst eine abgeleitete Variable auswählen!',
           type: MessageType.error
+        }
+      });
+    }
+  }
+
+  copyVarScheme() {
+    const selectedCoding = this.mainDataService.selectedCoding$.getValue();
+    if (selectedCoding) {
+      const dialogData = <SelectVariableDialogData>{
+        title: 'Kodierung kopieren',
+        prompt: 'Bitte Zielvariable wählen! Achtung: Die Kodierungsdaten der Zielvariable werden komplett überschrieben.',
+        variables: this.mainDataService.codings.filter(c => c.id !== selectedCoding.id).map(c => c.id),
+        okButtonLabel: 'Kopieren'
+      };
+      const dialogRef = this.selectVariableDialog.open(SelectVariableDialogComponent, {
+        width: '400px',
+        data: dialogData
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== false) {
+          this.mainDataService.copyCoding(selectedCoding.id, result);
         }
       });
     }
