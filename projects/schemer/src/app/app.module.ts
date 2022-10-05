@@ -14,7 +14,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { CodingSchemeComponent } from './components/coding-scheme/coding-scheme.component';
-import { NewVarSchemeComponent } from './components/new-var-scheme.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +31,9 @@ import { VeronaCommunicationDirective } from './directives/verona-communication.
 import { RichTextEditorComponent } from './components/rich-text-editor/rich-text-editor.component';
 import { RichTextEditDialogComponent } from './components/rich-text-editor/rich-text-edit-dialog.component';
 import { NgxTiptapModule } from 'ngx-tiptap';
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog.component';
+import { MessageDialogComponent } from './components/dialogs/message-dialog.component';
+import { SimpleInputDialogComponent } from './components/dialogs/simple-input-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,11 +41,13 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     SchemerToolbarComponent,
     SchemerStageComponent,
     CodingSchemeComponent,
-    NewVarSchemeComponent,
     CodeDataComponent,
     ShowCodingResultsComponent,
     SchemeCheckerComponent,
     VeronaCommunicationDirective,
+    ConfirmDialogComponent,
+    MessageDialogComponent,
+    SimpleInputDialogComponent,
     RichTextEditorComponent,
     RichTextEditDialogComponent
   ],

@@ -3,6 +3,8 @@ import { MainDataService } from '../services/main-data.service';
 import { VeronaAPIService, VosStartCommand } from '../services/verona-api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MetaDataService } from '../services/meta-data.service';
+import {Coding} from "../classes/coding.class";
+import { VariableCodingData } from '@response-scheme';
 
 @Directive({
   selector: '[appVeronaCommunication]'
@@ -29,13 +31,13 @@ export class VeronaCommunicationDirective implements OnInit, OnDestroy {
 
   private initMainDataService(message: VosStartCommand): void {
     this.mainDataService.selectedCoding$.next(null);
-    this.mainDataService.variableCodingData = [];
+    this.mainDataService.codings = [];
     this.mainDataService.invalidDataFormat = '';
     this.mainDataService.setSortedVarList(message.variables || []);
     if (message.codingScheme) {
       if (!message.codingSchemeType || message.codingSchemeType === 'iqb@1.1') {
         const codingScheme = JSON.parse(message.codingScheme);
-        this.mainDataService.variableCodingData = codingScheme.variableCodings
+        this.mainDataService.codings = codingScheme.variableCodings.map((c: Partial<VariableCodingData>) => new Coding(c))
       } else {
         this.mainDataService.invalidDataFormat = message.codingSchemeType
       }

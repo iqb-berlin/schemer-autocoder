@@ -1,8 +1,5 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row" fxLayoutGap="10px">
-    <mat-form-field fxFlex="220px">
-      <input matInput [placeholder]="'id' | translate" [(ngModel)]="codingScheme.id" [disabled]="codingScheme.sourceType === 'BASE'" >
-    </mat-form-field>
     <mat-form-field fxFlex>
       <input matInput [placeholder]="'description' | translate" [(ngModel)]="codingScheme.label" >
     </mat-form-field>
@@ -41,6 +38,7 @@
         <mat-chip-list #chipList>
           <mat-chip *ngIf="codingScheme.deriveSources.length === 0" [matMenuTriggerFor]="menu" class="no-sources">{{ 'derive-sources.error' | translate }}</mat-chip>
           <mat-chip *ngFor="let source of codingScheme.deriveSources"
+                    [class]="allVariables.indexOf(source) < 0 ? 'source-missing' : 'source-ok'"
                     removable="true" (removed)="deleteDeriveSource(source)">
             {{source}}
             <mat-icon matChipRemove>cancel</mat-icon>
