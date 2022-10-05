@@ -32,6 +32,8 @@ import { VeronaCommunicationDirective } from './directives/verona-communication.
 import { RichTextEditorComponent } from './components/rich-text-editor/rich-text-editor.component';
 import { RichTextEditDialogComponent } from './components/rich-text-editor/rich-text-edit-dialog.component';
 import { NgxTiptapModule } from 'ngx-tiptap';
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog.component';
+import { MessageDialogComponent } from './components/dialogs/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     ShowCodingResultsComponent,
     SchemeCheckerComponent,
     VeronaCommunicationDirective,
+    ConfirmDialogComponent,
+    MessageDialogComponent,
     RichTextEditorComponent,
     RichTextEditDialogComponent
   ],

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MainDataService } from '../../services/main-data.service';
-import { VariableInfo, VariableCodingData } from '@response-scheme';
+import { VariableInfo } from '@response-scheme';
 import { MatDialog } from '@angular/material/dialog';
 import { NewVarSchemeComponent, NewVarSchemeData } from '../new-var-scheme.component';
 import { lastValueFrom, map } from 'rxjs';
 import { UntypedFormGroup } from '@angular/forms';
+import { Coding } from '../../classes/coding.class';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../dialogs/confirm-dialog.component';
+import { MessageDialogComponent, MessageDialogData, MessageType } from '../dialogs/message-dialog.component';
 
 @Component({
   selector: 'schemer-stage',
@@ -15,21 +18,24 @@ export class SchemerStageComponent implements OnInit {
 
   constructor(
     public mainDataService: MainDataService,
-    private newVarSchemeDialog: MatDialog
+    private newVarSchemeDialog: MatDialog,
+    private confirmDialog: MatDialog,
+    private messageDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.mainDataService.syncVariables();
   }
 
-  selectVarScheme(varScheme: VariableCodingData | null = null) {
-    this.mainDataService.selectedCoding$.next(varScheme);
+  selectVarScheme(coding: Coding | null = null) {
+    this.mainDataService.selectedCoding$.next(coding);
   }
 
   addVarScheme() {
-    this.addVarSchemeDialog().then((newVarScheme: VariableCodingData | boolean) => {
-      if (typeof newVarScheme !== 'boolean') {
-        this.mainDataService.addCoding(newVarScheme);
+    this.addVarSchemeDialog().then((newCoding: Coding | boolean) => {
+      if (typeof newCoding !== 'boolean') {
+        this.mainDataService.addCoding(newCoding);
+        this.mainDataService.updateCodingsStatus();
       }
     });
   }
@@ -37,10 +43,10 @@ export class SchemerStageComponent implements OnInit {
   resetScheme() {
     this.mainDataService.selectedCoding$.next(null);
     this.mainDataService.invalidDataFormat = '';
-    this.mainDataService.codingSchemeChanged.emit(this.mainDataService.variableCodingData);
+    this.mainDataService.setCodingSchemesChanged();
   }
 
-  async addVarSchemeDialog(): Promise<VariableCodingData | boolean> {
+  async addVarSchemeDialog(): Promise<Coding | boolean> {
     this.selectVarScheme();
     const dialogRef = this.newVarSchemeDialog.open(NewVarSchemeComponent, {
       width: '600px',
@@ -54,7 +60,7 @@ export class SchemerStageComponent implements OnInit {
       map(dialogResult => {
         if (typeof dialogResult !== 'undefined') {
           if (dialogResult !== false) {
-            return <VariableCodingData>{
+            return new Coding({
               id: (<UntypedFormGroup>dialogResult).get('key')?.value.trim(),
               label: (<UntypedFormGroup>dialogResult).get('label')?.value.trim(),
               sourceType: 'DERIVE_CONCAT',
@@ -63,7 +69,7 @@ export class SchemerStageComponent implements OnInit {
               valueTransformations: [],
               manualInstruction: '',
               codes: []
-            };
+            });
           }
         }
         return false;
@@ -72,7 +78,33 @@ export class SchemerStageComponent implements OnInit {
   }
 
   deleteVarScheme() {
-
+    const selectedCoding = this.mainDataService.selectedCoding$.getValue();
+    if (selectedCoding && selectedCoding.sourceType !== 'BASE') {
+      const dialogRef = this.confirmDialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: <ConfirmDialogData>{
+          title: 'Löschen abgeleitete Variable',
+          content: `Die Variable "${selectedCoding.id}" wird gelöscht. Fortsetzen?`,
+          confirmButtonLabel: 'Löschen',
+          showCancel: true
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== false) {
+          this.mainDataService.removeCoding(selectedCoding);
+          this.mainDataService.updateCodingsStatus();
+        }
+      });
+    } else {
+      this.messageDialog.open(MessageDialogComponent, {
+        width: '400px',
+        data: <MessageDialogData>{
+          title: 'Löschen Variable',
+          content: 'Bitte erst eine abgeleitete Variable auswählen!',
+          type: MessageType.error
+        }
+      });
+    }
   }
 
   showBasicVarDetails(varBasic: VariableInfo) {

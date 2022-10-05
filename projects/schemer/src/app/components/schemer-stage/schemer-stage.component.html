@@ -3,22 +3,30 @@
   <div class="navi-bar" fxLayout="column" fxFlex="200px" *ngIf="mainDataService.varList.length > 0">
     <div fxFlex class="var-scheme-list">
       <div class="basic-var-list-header">Basisvariablen</div>
-      <mat-nav-list *ngFor="let varBasic of mainDataService.filteredCodings(mainDataService.variableCodingData, true)">
-        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
-           class="var-list-entry"
-           [class]="varBasic.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'"
-           (click)="selectVarScheme(varBasic)">
-          {{ varBasic.id }}
-        </a>
+      <mat-nav-list *ngFor="let varBasic of mainDataService.filteredCodings(mainDataService.codings, true)" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div [class]="'var-marker-' + varBasic.status" [matTooltip]="('coding-status.base-' + varBasic.status) | translate"></div>
+          <a mat-list-item style="height: 22px;text-overflow: ellipsis"
+             class="var-list-entry"
+             fxFlex
+             [class]="varBasic.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'"
+             (click)="selectVarScheme(varBasic)">
+            {{ varBasic.id }}
+          </a>
+        </div>
       </mat-nav-list>
       <div class="var-scheme-list-header">Abgeleitete Variablen</div>
-      <mat-nav-list *ngFor="let varScheme of mainDataService.filteredCodings(mainDataService.variableCodingData, false)">
-        <a mat-list-item style="height: 22px;text-overflow: ellipsis"
-           class="var-list-entry"
-           (click)="selectVarScheme(varScheme)"
-           [class]="varScheme.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'">
-          {{ varScheme.id }}
-        </a>
+      <mat-nav-list *ngFor="let varScheme of mainDataService.filteredCodings(mainDataService.codings, false)" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div [class]="'var-marker-' + varScheme.status" [matTooltip]="('coding-status.derived-' + varScheme.status) | translate"></div>
+          <a mat-list-item style="height: 22px;text-overflow: ellipsis"
+             class="var-list-entry"
+             fxFlex
+             (click)="selectVarScheme(varScheme)"
+             [class]="varScheme.id === (mainDataService.selectedCoding$ | async)?.id ? 'selected' : 'not-selected'">
+            {{ varScheme.id }}
+          </a>
+        </div>
       </mat-nav-list>
     </div>
     <!-- # # # # # # # # # # # # # # # # # # # # # # # # -->
@@ -26,7 +34,7 @@
       <button mat-raised-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="33">
         <mat-icon>add</mat-icon>
       </button>
-      <button mat-raised-button (click)="deleteVarScheme()" matTooltip="Variable(n) löschen" matTooltipPosition="above" fxFlex="33">
+      <button mat-raised-button [disabled]="(mainDataService.selectedCoding$ | async) === null" (click)="deleteVarScheme()" matTooltip="Variable(n) löschen" matTooltipPosition="above" fxFlex="33">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-button [matMenuTriggerFor]="menu" disabled="disabled" matTooltip="Weitere Funktionen..." matTooltipPosition="above" fxFlex>
@@ -60,7 +68,7 @@
 
   <var-scheme [codingScheme]="mainDataService.selectedCoding$ | async" fxFlex class="var-scheme-container"
               *ngIf="!mainDataService.invalidDataFormat"
-              [allVariables]="mainDataService.allCodings(mainDataService.variableCodingData)"
-              (codingSchemeChanged)="mainDataService.setCodingSchemesChanged()">
+              [allVariables]="mainDataService.allCodingIds()"
+              (codingSchemeChanged)="mainDataService.updateCodingsStatus(); mainDataService.setCodingSchemesChanged()">
   </var-scheme>
 </div>

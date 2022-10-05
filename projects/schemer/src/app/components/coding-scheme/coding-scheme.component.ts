@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CodeData, VariableCodingData, ValueTransformation } from '@response-scheme';
+import { CodeData, ValueTransformation } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { Coding } from '../../classes/coding.class';
 
 @Component({
   selector: 'var-scheme',
@@ -11,9 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./coding-scheme.component.scss']
 })
 export class CodingSchemeComponent implements OnInit {
-  @Output() codingSchemeChanged = new EventEmitter<VariableCodingData | null>();
-
-  @Input() codingScheme: VariableCodingData | null = null;
+  @Output() codingSchemeChanged = new EventEmitter<Coding | null>();
+  @Input() codingScheme: Coding | null = null;
   @Input() allVariables: string[] = [];
 
   constructor(
@@ -103,7 +103,9 @@ export class CodingSchemeComponent implements OnInit {
   }
 
   setCodingSchemeChanged(): void {
-    this.codingSchemeChanged.emit(this.codingScheme);
+    if (this.codingScheme) {
+      this.codingSchemeChanged.emit(this.codingScheme);
+    }
   }
 
   deleteCode(codeToDeleteId: number) {
