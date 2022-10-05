@@ -71,11 +71,11 @@ export class SchemerStageComponent implements OnInit {
 
   deleteVarScheme() {
     const selectedCoding = this.mainDataService.selectedCoding$.getValue();
-    if (selectedCoding && selectedCoding.sourceType !== 'BASE') {
+    if (selectedCoding && (selectedCoding.sourceType !== 'BASE' || selectedCoding.status === 'INVALID_SOURCE')) {
       const dialogRef = this.confirmDialog.open(ConfirmDialogComponent, {
         width: '400px',
         data: <ConfirmDialogData>{
-          title: 'Löschen abgeleitete Variable',
+          title: 'Löschen Variable',
           content: `Die Variable "${selectedCoding.id}" wird gelöscht. Fortsetzen?`,
           confirmButtonLabel: 'Löschen',
           showCancel: true
@@ -92,7 +92,7 @@ export class SchemerStageComponent implements OnInit {
         width: '400px',
         data: <MessageDialogData>{
           title: 'Löschen Variable',
-          content: 'Bitte erst eine abgeleitete Variable auswählen!',
+          content: 'Bitte erst eine abgeleitete oder verwaiste Variable auswählen!',
           type: MessageType.error
         }
       });
