@@ -30,35 +30,18 @@
       </mat-nav-list>
     </div>
     <!-- # # # # # # # # # # # # # # # # # # # # # # # # -->
-    <div fxLayout="row">
-      <button mat-raised-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="33">
+    <div fxLayout="row" class="var-list-buttons">
+      <button mat-button (click)="addVarScheme()" matTooltip="Variable hinzufügen" matTooltipPosition="above" fxFlex="33">
         <mat-icon>add</mat-icon>
       </button>
-      <button mat-raised-button [disabled]="(mainDataService.selectedCoding$ | async) === null" (click)="deleteVarScheme()" matTooltip="Variable(n) löschen" matTooltipPosition="above" fxFlex="33">
+      <button mat-button [disabled]="(mainDataService.selectedCoding$ | async) === null || ((mainDataService.selectedCoding$ | async)?.sourceType === 'BASE' && (mainDataService.selectedCoding$ | async)?.status !== 'INVALID_SOURCE')"
+              (click)="deleteVarScheme()" matTooltip="Variable löschen" matTooltipPosition="above" fxFlex="33">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-button [matMenuTriggerFor]="menu" disabled="disabled" matTooltip="Weitere Funktionen..." matTooltipPosition="above" fxFlex>
-        <mat-icon>menu</mat-icon>
+      <button mat-button [disabled]="(mainDataService.selectedCoding$ | async) === null || (mainDataService.selectedCoding$ | async)?.sourceType === 'BASE'"
+              (click)="renameVarScheme()" matTooltip="Variable umbenennen" matTooltipPosition="above" fxFlex>
+        <mat-icon>edit</mat-icon>
       </button>
-
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="addVarScheme()">
-          <mat-icon>settings</mat-icon>Einstellungen
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="addVarScheme()">
-          <mat-icon>content_copy</mat-icon>Kopieren
-        </button>
-        <button mat-menu-item (click)="addVarScheme()">
-          <mat-icon>swap_horiz</mat-icon>Verschieben
-        </button>
-        <button mat-menu-item (click)="addVarScheme()">
-          <mat-icon>input</mat-icon>Import
-        </button>
-        <button mat-menu-item (click)="addVarScheme()">
-          <mat-icon>get_app</mat-icon>Export
-        </button>
-      </mat-menu>
     </div>
   </div>
   <div *ngIf="mainDataService.invalidDataFormat" class="invalid-data-format" fxFlex>

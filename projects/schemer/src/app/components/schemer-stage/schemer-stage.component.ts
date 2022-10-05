@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MainDataService } from '../../services/main-data.service';
-import { VariableInfo } from '@response-scheme';
 import { MatDialog } from '@angular/material/dialog';
-import { NewVarSchemeComponent, NewVarSchemeData } from '../new-var-scheme.component';
-import { lastValueFrom, map } from 'rxjs';
-import { UntypedFormGroup } from '@angular/forms';
 import { Coding } from '../../classes/coding.class';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../dialogs/confirm-dialog.component';
 import { MessageDialogComponent, MessageDialogData, MessageType } from '../dialogs/message-dialog.component';
+import { SimpleInputDialogComponent, SimpleInputDialogData } from '../dialogs/simple-input-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'schemer-stage',
@@ -19,8 +17,10 @@ export class SchemerStageComponent implements OnInit {
   constructor(
     public mainDataService: MainDataService,
     private newVarSchemeDialog: MatDialog,
+    private translateService: TranslateService,
     private confirmDialog: MatDialog,
-    private messageDialog: MatDialog
+    private messageDialog: MatDialog,
+    private inputDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -32,10 +32,33 @@ export class SchemerStageComponent implements OnInit {
   }
 
   addVarScheme() {
-    this.addVarSchemeDialog().then((newCoding: Coding | boolean) => {
-      if (typeof newCoding !== 'boolean') {
-        this.mainDataService.addCoding(newCoding);
-        this.mainDataService.updateCodingsStatus();
+    const dialogData = <SimpleInputDialogData>{
+      title: 'Neue abgeleitete Variable',
+      prompt: 'Bitte Kennung der Variablen eingeben.',
+      placeholder: 'Variablen-Kennung',
+      value: '',
+      saveButtonLabel: 'Speichern',
+      showCancel: true
+    };
+    const dialogRef = this.inputDialog.open(SimpleInputDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== false) {
+        const errorMessage = this.mainDataService.addCoding(result);
+        if (errorMessage) {
+          this.messageDialog.open(MessageDialogComponent, {
+            width: '400px',
+            data: <MessageDialogData>{
+              title: 'Neue Variable - Fehler',
+              content: this.translateService.instant(errorMessage),
+              type: MessageType.error
+            }
+          });
+        } else {
+          this.mainDataService.updateCodingsStatus();
+        }
       }
     });
   }
@@ -44,37 +67,6 @@ export class SchemerStageComponent implements OnInit {
     this.mainDataService.selectedCoding$.next(null);
     this.mainDataService.invalidDataFormat = '';
     this.mainDataService.setCodingSchemesChanged();
-  }
-
-  async addVarSchemeDialog(): Promise<Coding | boolean> {
-    this.selectVarScheme();
-    const dialogRef = this.newVarSchemeDialog.open(NewVarSchemeComponent, {
-      width: '600px',
-      data: <NewVarSchemeData>{
-        title: 'Neue Variable',
-        key: '',
-        label: ''
-      }
-    });
-    return lastValueFrom(dialogRef.afterClosed().pipe(
-      map(dialogResult => {
-        if (typeof dialogResult !== 'undefined') {
-          if (dialogResult !== false) {
-            return new Coding({
-              id: (<UntypedFormGroup>dialogResult).get('key')?.value.trim(),
-              label: (<UntypedFormGroup>dialogResult).get('label')?.value.trim(),
-              sourceType: 'DERIVE_CONCAT',
-              deriveSources: [],
-              deriveSourceType: 'CODE',
-              valueTransformations: [],
-              manualInstruction: '',
-              codes: []
-            });
-          }
-        }
-        return false;
-      })
-    ));
   }
 
   deleteVarScheme() {
@@ -107,7 +99,47 @@ export class SchemerStageComponent implements OnInit {
     }
   }
 
-  showBasicVarDetails(varBasic: VariableInfo) {
-    alert(`Details für Basisvariable ${varBasic.id}`);
+  renameVarScheme() {
+    const selectedCoding = this.mainDataService.selectedCoding$.getValue();
+    if (selectedCoding && selectedCoding.sourceType !== 'BASE') {
+      const dialogData = <SimpleInputDialogData>{
+        title: 'Variable umbenennen',
+        prompt: `Bitte neue Kennung der Variablen '${selectedCoding.id}' eingeben.`,
+        placeholder: 'Variablen-Kennung',
+        value: selectedCoding.id,
+        saveButtonLabel: 'Speichern',
+        showCancel: true
+      };
+      const dialogRef = this.inputDialog.open(SimpleInputDialogComponent, {
+        width: '400px',
+        data: dialogData
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== false) {
+          const errorMessage = this.mainDataService.renameCoding(selectedCoding.id, result);
+          if (errorMessage) {
+            this.messageDialog.open(MessageDialogComponent, {
+              width: '400px',
+              data: <MessageDialogData>{
+                title: 'Variable umbenennen - Fehler',
+                content: this.translateService.instant(errorMessage),
+                type: MessageType.error
+              }
+            });
+          } else {
+            this.mainDataService.updateCodingsStatus();
+          }
+        }
+      });
+    } else {
+      this.messageDialog.open(MessageDialogComponent, {
+        width: '400px',
+        data: <MessageDialogData>{
+          title: 'Variable umbenennen',
+          content: 'Bitte erst eine abgeleitete Variable auswählen!',
+          type: MessageType.error
+        }
+      });
+    }
   }
 }

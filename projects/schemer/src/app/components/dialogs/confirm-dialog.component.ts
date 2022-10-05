@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'tc-confirm-dialog',
   template: `
     <h1 mat-dialog-title>{{ confirmData.title }}</h1>
 
@@ -14,7 +13,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
     <mat-dialog-actions>
       <button mat-raised-button color="primary" [mat-dialog-close]="true">{{ confirmData.confirmButtonLabel }}</button>
-      <button mat-raised-button *ngIf="showCancel" [mat-dialog-close]="false">Abbrechen</button>
+      <button mat-raised-button *ngIf="showCancel" [mat-dialog-close]="false">{{'dialog-cancel' | translate}}</button>
     </mat-dialog-actions>
   `
 })
