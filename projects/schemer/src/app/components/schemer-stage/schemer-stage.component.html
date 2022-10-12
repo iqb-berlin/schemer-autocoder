@@ -1,5 +1,4 @@
 <div class="scheme-body" fxLayout="row" fxLayoutAlign="space-between stretch">
-  <p *ngIf="!mainDataService.invalidDataFormat && mainDataService.varList.length === 0" style="margin: 20px;">{{'data-error.base-variables-missing' | translate}}</p>
   <div class="navi-bar" fxLayout="column" fxFlex="200px" *ngIf="mainDataService.varList.length > 0">
     <div fxFlex class="var-scheme-list">
       <div class="basic-var-list-header">Basisvariablen</div>
@@ -53,6 +52,8 @@
     <button mat-raised-button (click)="resetScheme()">Alle Daten des Kodierschemas löschen</button>
   </div>
 
+  <div *ngIf="!mainDataService.invalidDataFormat && mainDataService.varList.length === 0" fxFlex="200px"
+       style="margin: 20px;">{{'data-error.base-variables-missing' | translate}}</div>
   <var-scheme [codingScheme]="mainDataService.selectedCoding$ | async" fxFlex class="var-scheme-container"
               *ngIf="!mainDataService.invalidDataFormat"
               [allVariables]="mainDataService.allCodingIds()"

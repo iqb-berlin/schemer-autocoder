@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 import { CodeData, ValueTransformation } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
 import { Coding } from '../../classes/coding.class';
 
 @Component({
@@ -11,7 +13,7 @@ import { Coding } from '../../classes/coding.class';
   templateUrl: './coding-scheme.component.html',
   styleUrls: ['./coding-scheme.component.scss']
 })
-export class CodingSchemeComponent implements OnInit {
+export class CodingSchemeComponent {
   @Output() codingSchemeChanged = new EventEmitter<Coding | null>();
   @Input() codingScheme: Coding | null = null;
   @Input() allVariables: string[] = [];
@@ -21,9 +23,6 @@ export class CodingSchemeComponent implements OnInit {
     private translateService: TranslateService,
     private editTextDialog: MatDialog
   ) { }
-
-  ngOnInit(): void {
-  }
 
   getNewSources(usedVars: string[]) {
     const returnSources: string[] = [];

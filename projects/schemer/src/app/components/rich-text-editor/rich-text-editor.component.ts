@@ -82,8 +82,6 @@ export class RichTextEditorComponent implements OnInit, AfterViewInit {
     extensions: this.defaultExtensions
   });
 
-  constructor() { }
-
   ngOnInit(): void {
     this.editor = new Editor({
       extensions: this.defaultExtensions,

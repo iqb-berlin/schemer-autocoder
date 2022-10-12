@@ -1,25 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { MainDataService } from '../../services/main-data.service';
+import { Component } from '@angular/core';
 import { ResponseData } from '@response-scheme';
 import { AutoCoder } from '@auto-coder';
-import { ShowCodingResultsComponent } from './show-coding-results.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MainDataService } from '../../services/main-data.service';
+import { ShowCodingResultsComponent } from './show-coding-results.component';
 
 @Component({
   selector: 'schema-checker',
   templateUrl: './scheme-checker.component.html',
   styleUrls: ['./scheme-checker.component.scss']
 })
-export class SchemeCheckerComponent implements OnInit {
+export class SchemeCheckerComponent {
   values: { [Key in string]: string } = {};
 
   constructor(
     public mainDataService: MainDataService,
     private showCodingResultsDialog: MatDialog
   ) { }
-
-  ngOnInit(): void {
-  }
 
   updateInputValue(sourceElement: EventTarget | null, targetVariable: string) {
     if (sourceElement) this.values[targetVariable] = (sourceElement as HTMLInputElement).value;

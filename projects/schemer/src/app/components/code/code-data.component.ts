@@ -1,29 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output
+} from '@angular/core';
 import { CodeData, CodingRule, RuleMethod } from '@response-scheme';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import {TranslateService} from "@ngx-translate/core";
-import {RichTextEditDialogComponent} from "../rich-text-editor/rich-text-edit-dialog.component";
+import { TranslateService } from '@ngx-translate/core';
+import { RichTextEditDialogComponent } from '../rich-text-editor/rich-text-edit-dialog.component';
 
 @Component({
   selector: 'code-data',
   templateUrl: './code-data.component.html',
   styleUrls: ['./code-data.component.scss']
 })
-export class CodeDataComponent implements OnInit {
+export class CodeDataComponent {
   @Output() codeDataChanged = new EventEmitter<CodeData[]>();
   @Input() codeData: CodeData | null = null;
   @Input() allCodes: CodeData[] = [];
   showCodeButtonsOf = '';
+  getParamCountWrapper = CodeDataComponent.getParamCount;
 
   constructor(
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private editTextDialog: MatDialog
   ) { }
-
-  ngOnInit(): void {
-  }
 
   getSanitizedText(text: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(text);
@@ -80,7 +80,8 @@ export class CodeDataComponent implements OnInit {
     return returnSources;
   }
 
-  getParamCount(ruleMethod: RuleMethod): number {
+  static getParamCount(ruleMethod: RuleMethod): number {
+    // eslint-disable-next-line default-case
     switch (ruleMethod) {
       case 'MATCH':
       case 'MATCH_REGEX':
@@ -100,7 +101,7 @@ export class CodeDataComponent implements OnInit {
         method: newRuleMethod,
         parameters: []
       };
-      const paramCount = this.getParamCount(newRuleMethod);
+      const paramCount = CodeDataComponent.getParamCount(newRuleMethod);
       if (paramCount !== 0) newRule.parameters.push('');
       if (paramCount > 1) newRule.parameters.push('');
       this.codeData.rules.push(newRule);

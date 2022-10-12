@@ -8,9 +8,9 @@ describe('CodingSchemeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CodingSchemeComponent ]
+      declarations: [CodingSchemeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -9,9 +9,12 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
                         [editorHeightPx]="data.editorHeightPx"
                         [defaultFontSize]="data.defaultFontSize">
       </rich-text-editor>
-      <mat-dialog-actions>
-        <button mat-raised-button [mat-dialog-close]="data.content">{{'dialog-save' | translate }}</button>
-        <button mat-raised-button [mat-dialog-close]="false">{{'dialog-cancel' | translate }}</button>
+      <mat-dialog-actions fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+          <button mat-raised-button [mat-dialog-close]="data.content">{{'dialog-save' | translate }}</button>
+          <button mat-raised-button [mat-dialog-close]="false">{{'dialog-cancel' | translate }}</button>
+        </div>
+        <button mat-raised-button [mat-dialog-close]="''">{{'dialog-empty' | translate }}</button>
       </mat-dialog-actions>
     </div>
   `

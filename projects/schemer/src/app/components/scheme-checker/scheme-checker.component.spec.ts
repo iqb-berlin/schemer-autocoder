@@ -8,9 +8,9 @@ describe('SchemaCheckerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SchemeCheckerComponent ]
+      declarations: [SchemeCheckerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

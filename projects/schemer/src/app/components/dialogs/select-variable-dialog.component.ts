@@ -1,4 +1,6 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import {
+  Component, OnInit, Inject, ViewChild
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 

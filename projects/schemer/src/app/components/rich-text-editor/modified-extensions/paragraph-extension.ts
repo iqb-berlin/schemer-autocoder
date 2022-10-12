@@ -1,5 +1,6 @@
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Command } from '@tiptap/core';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Transaction } from 'prosemirror-state';
 
 declare module '@tiptap/core' {

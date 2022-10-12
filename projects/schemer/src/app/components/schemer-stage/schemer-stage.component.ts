@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MainDataService } from '../../services/main-data.service';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { MainDataService } from '../../services/main-data.service';
 import { Coding } from '../../classes/coding.class';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../dialogs/confirm-dialog.component';
 import { MessageDialogComponent, MessageDialogData, MessageType } from '../dialogs/message-dialog.component';
 import { SimpleInputDialogComponent, SimpleInputDialogData } from '../dialogs/simple-input-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
 import { SelectVariableDialogComponent, SelectVariableDialogData } from '../dialogs/select-variable-dialog.component';
 
 @Component({
@@ -14,7 +14,6 @@ import { SelectVariableDialogComponent, SelectVariableDialogData } from '../dial
   styleUrls: ['./schemer-stage.component.scss']
 })
 export class SchemerStageComponent implements OnInit {
-
   constructor(
     public mainDataService: MainDataService,
     private newVarSchemeDialog: MatDialog,
