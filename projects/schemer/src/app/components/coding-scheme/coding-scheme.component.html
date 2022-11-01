@@ -1,7 +1,9 @@
 <div fxLayout="column" *ngIf="codingScheme" fxLayoutGap="5px" class="element-host">
   <div fxLayout="row" fxLayoutGap="10px">
     <mat-form-field fxFlex>
-      <input matInput [placeholder]="'description' | translate" [(ngModel)]="codingScheme.label" >
+      <input matInput [placeholder]="'description' | translate" [(ngModel)]="codingScheme.label"
+             (change)="setCodingSchemeChanged()"
+      >
     </mat-form-field>
   </div>
   <div fxLayout="row" fxLayoutGap="10px" *ngIf="codingScheme.sourceType !== 'BASE'">
