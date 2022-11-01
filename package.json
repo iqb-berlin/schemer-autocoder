@@ -1,7 +1,7 @@
 {
   "name": "schemer-autocoder",
   "config": {
-    "schemer_version": "1.0.0"
+    "schemer_version": "1.1.0"
   },
   "scripts": {
     "ng": "ng",

@@ -9,11 +9,11 @@ const packageName = process.argv[2];
 const packageVersion = process.argv[3];
 const wrapperPath = process.argv[4];
 
-execSync( `node node_modules/iqb-dev-components/src/js_css_packer.js dist ${packageName} dist`);
+execSync(`node node_modules/iqb-dev-components/src/js_css_packer.js dist ${packageName} dist`);
 
 const fileContent = fs.readFileSync(wrapperPath, 'utf8').toString()
   .replace(/version-placeholder/g, packageVersion);
 fs.writeFileSync('dist/index.html', fileContent, 'utf8');
 
-const targetFileName = `verona-schemer-autocoder@${packageVersion}.html`;
+const targetFileName = `iqb-schemer@${packageVersion}.html`;
 execSync(`node node_modules/iqb-dev-components/src/distpacker.js dist ${targetFileName} ${packageName}`);

@@ -73,7 +73,7 @@ export class CodingSchemeComponent {
           title: this.translateService.instant('manual-instruction.prompt-general'),
           content: this.codingScheme.manualInstruction || '',
           defaultFontSize: 20,
-          editorHeightPx: 550
+          editorHeightPx: 400
         },
         autoFocus: false
       });
