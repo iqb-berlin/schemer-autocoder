@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve --port 4203",
     "build": "ng build --project schemer --output-hashing=none",
+    "build-coder": "cd projects/auto-coder && webpack",
     "pack": "node scripts/wrap_and_pack.js schemer $npm_package_config_schemer_version projects/schemer/src/html_wrapper/index.html",
     "buildAndPack": "npm run build && npm run pack",
     "watch": "ng build --watch --configuration development",
@@ -26,6 +27,7 @@
     "@angular/platform-browser": "^14.2.4",
     "@angular/platform-browser-dynamic": "^14.2.4",
     "@angular/router": "^14.2.4",
+    "@iqb/responses": "^0.2.0",
     "@ngx-translate/core": "^14.0.0",
     "@tiptap/core": "^2.0.0-beta.197",
     "@tiptap/extension-blockquote": "^2.0.0-beta.197",
@@ -62,9 +64,6 @@
     "@iqb/eslint-config": "^2.1.1",
     "@types/jasmine": "^4.3.0",
     "@types/node": "^18.7.23",
-    "eslint": "8.15.0",
-    "eslint-config-prettier": "8.1.0",
-    "eslint-plugin-cypress": "^2.10.3",
     "iqb-dev-components": "^1.4.0",
     "jasmine-core": "^4.4.0",
     "karma": "^6.4.1",
@@ -73,7 +72,10 @@
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.0.0",
     "ng-packagr": "^14.2.1",
-    "typescript": "^4.8.4"
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "eslintConfig": {
     "extends": "@iqb/eslint-config",

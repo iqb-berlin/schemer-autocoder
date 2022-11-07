@@ -1,4 +1,4 @@
-import { VariableCodingData, ResponseData } from '@response-scheme';
+import { VariableCodingData, ResponseData } from '@iqb/responses';
 import { CoderVariableClass } from './coder-variable.class';
 
 export class AutoCoder {
