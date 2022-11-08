@@ -15,9 +15,15 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  mode: 'development',
+  mode: 'production',
   output: {
-    filename: 'auto-coder@0.1.js',
-    path: path.resolve(__dirname, '../../dist')
+    filename: 'auto-coder@0.9.js',
+    path: path.resolve(__dirname, '../../dist'),
+    library: {
+      type: 'module'
+    }
+  },
+  experiments: {
+    outputModule: true
   }
 };

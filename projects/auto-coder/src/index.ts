@@ -2,4 +2,4 @@
  * Public API Surface of auto-coder
  */
 
-export * from './lib/auto-coder.class';
+export { metadata, AutoCoder } from './lib/auto-coder.class';
