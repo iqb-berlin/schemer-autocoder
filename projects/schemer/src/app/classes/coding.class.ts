@@ -1,6 +1,6 @@
 import {
   CodeData, ValueTransformation, VariableCodingData, VariableInfo
-} from '@response-scheme';
+} from '@iqb/responses';
 
 export class Coding implements VariableCodingData {
   status: 'INVALID_SOURCE' | 'EMPTY' | 'HAS_CODES';

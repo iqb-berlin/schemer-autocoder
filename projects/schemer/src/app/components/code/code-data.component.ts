@@ -1,7 +1,7 @@
 import {
   Component, EventEmitter, Input, Output
 } from '@angular/core';
-import { CodeData, CodingRule, RuleMethod } from '@response-scheme';
+import { CodeData, CodingRule, RuleMethod } from '@iqb/responses';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';

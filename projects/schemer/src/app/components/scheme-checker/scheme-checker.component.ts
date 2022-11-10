@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResponseData } from '@response-scheme';
+import { ResponseData } from '@iqb/responses';
 import { MatDialog } from '@angular/material/dialog';
 import { MainDataService } from '../../services/main-data.service';
 import { ShowCodingResultsComponent } from './show-coding-results.component';

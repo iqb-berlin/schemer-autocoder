@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { createCustomElement } from '@angular/elements';
 import { NgxTiptapModule } from 'ngx-tiptap';
+import { CodingComponentsModule } from '@iqb/coding-components';
 import { CodeDataComponent } from './components/code/code-data.component';
 import { SchemeCheckerComponent } from './components/scheme-checker/scheme-checker.component';
 import { ShowCodingResultsComponent } from './components/scheme-checker/show-coding-results.component';
@@ -80,7 +81,8 @@ import { SelectVariableDialogComponent } from './components/dialogs/select-varia
     MatCheckboxModule,
     MatCardModule,
     MatSidenavModule,
-    NgxTiptapModule
+    NgxTiptapModule,
+    CodingComponentsModule
   ]
 })
 
