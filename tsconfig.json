@@ -16,20 +16,13 @@
     "importHelpers": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2020",
-    "module": "es2020",
+    "useDefineForClassFields": false,
+    "target": "es2022",
+    "module": "es2022",
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
-    ],
-    "paths": {
-      "@response-scheme": [
-        "projects/response-scheme/src/public-api.ts"
-      ],
-      "@auto-coder": [
-        "projects/auto-coder/src/public-api.ts"
-      ]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,14 +1,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {VeronaAPIService, VosStartCommand} from "./verona-api.service";
 import {Subject, takeUntil} from "rxjs";
-import {CodingScheme, VariableInfo} from "@iqb/responses";
+import {CodingScheme, VariableCodingData, VariableInfo} from "@iqb/responses";
 import {SchemerComponent} from "@iqb/ngx-coding-components";
+import {CodingFactory} from "@iqb/responses/coding-factory";
 
 @Component({
   selector: 'app-root',
   template: `
     <mat-drawer-container class="coder-body">
-      <mat-drawer #drawer mode="side" *ngIf="isStandalone">
+      <mat-drawer #drawer mode="side" [hidden]="isStandalone">
         <schema-checker [codingScheme]="codings"></schema-checker>
       </mat-drawer>
       <mat-drawer-content class="drawer-content">
@@ -23,7 +24,12 @@ import {SchemerComponent} from "@iqb/ngx-coding-components";
         ></iqb-schemer>
       </mat-drawer-content>
     </mat-drawer-container>
-    <schemer-load-save *ngIf="isStandalone" [varList]="varList" [codingScheme]="codings" [style.height.px]="0"></schemer-load-save>
+    <schemer-load-save *ngIf="isStandalone"
+                       [varList]="varList"
+                       [codingScheme]="codings"
+                       (varListChanged)="setNewVarlist($event)"
+                       (codingSchemeChanged)="setNewCodingScheme($event)"
+                       [style.height.px]="0"></schemer-load-save>
     `,
   styles: [
     `
@@ -86,6 +92,21 @@ export class AppComponent implements OnInit, OnDestroy {
           () => this.veronaAPIService.sendVosSchemeChangedNotification(this.codings)
         )
     }
+  }
+
+  setNewVarlist(varList: VariableInfo[] | null) {
+    if (varList) {
+      this.varList = varList;
+      const variableCodings: VariableCodingData[] = [];
+      this.varList.forEach(c => {
+        variableCodings.push(CodingFactory.createCodingVariableFromVarInfo(c));
+      });
+      this.codings = new CodingScheme(variableCodings);
+    }
+  }
+
+  setNewCodingScheme(codings: CodingScheme | null) {
+    if (codings) this.codings = codings;
   }
 
   ngOnDestroy(): void {

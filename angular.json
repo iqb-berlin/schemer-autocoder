@@ -23,16 +23,20 @@
             "outputPath": "dist/schemer",
             "index": "projects/schemer/src/index.html",
             "main": "projects/schemer/src/main.ts",
-            "polyfills": "projects/schemer/src/polyfills.ts",
             "tsConfig": "projects/schemer/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "polyfills": [
+              "zone.js"
+            ],
             "assets": [
               "projects/schemer/src/favicon.ico",
               "projects/schemer/src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "projects/schemer/src/styles.scss"
+              "projects/schemer/src/styles.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/schemer/src/assets/material-icons.css",
+              "projects/schemer/src/assets/customTheme.scss"
             ],
             "scripts": []
           },
@@ -91,7 +95,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/schemer/src/test.ts",
-            "polyfills": "projects/schemer/src/polyfills.ts",
             "tsConfig": "projects/schemer/tsconfig.spec.json",
             "karmaConfig": "projects/schemer/karma.conf.js",
             "inlineStyleLanguage": "scss",

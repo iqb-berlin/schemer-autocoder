@@ -10,12 +10,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {NgxCodingComponentsModule} from "@iqb/ngx-coding-components";
-import {VeronaCommunicationDirective} from "./verona-communication.directive";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    VeronaCommunicationDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,
