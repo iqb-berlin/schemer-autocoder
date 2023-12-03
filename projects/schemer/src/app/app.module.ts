@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {DoBootstrap, Injector, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {NgxCodingComponentsModule} from "@iqb/ngx-coding-components";
+import {createCustomElement} from "@angular/elements";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,12 @@ import {NgxCodingComponentsModule} from "@iqb/ngx-coding-components";
     MatSidenavModule,
     MatToolbarModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
-export class AppModule { }
+export class AppModule implements DoBootstrap {
+  constructor(private injector: Injector) {}
+  ngDoBootstrap(): void {
+    const schemer = createCustomElement(AppComponent, { injector: this.injector });
+    customElements.define('app-root', schemer);
+  }
+}
