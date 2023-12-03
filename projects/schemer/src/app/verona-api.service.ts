@@ -1,17 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { VariableInfo, CodingSchemeDto } from '@response-scheme';
+import {CodingScheme, VariableInfo} from "@iqb/responses";
+import {DOCUMENT} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VeronaAPIService {
   sessionID: string = '';
+  metadata: Record<string, string> = {};
   private _vosStartCommand = new Subject<VosStartCommand>();
 
   private isStandalone = (): boolean => window === window.parent;
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    const metadata: string | null | undefined = document.getElementById('meta_data')?.textContent;
+    if (metadata) {
+      this.metadata = JSON.parse(metadata);
+    }
     fromEvent(window, 'message')
       .subscribe((event: Event): void => {
         this.handleMessage((event as MessageEvent).data);
@@ -43,15 +49,15 @@ export class VeronaAPIService {
     });
   }
 
-  sendVosSchemeChangedNotification(scheme: CodingSchemeDto, derivedVariables: VariableInfo[]): void {
+  sendVosSchemeChangedNotification(scheme: CodingScheme | null): void {
     console.log('schemer: sendVosSchemeChangedNotification ', scheme);
     this.send(<VosSchemeChangedData>{
       type: 'vosSchemeChangedNotification',
       sessionId: this.sessionID,
       timeStamp: String(Date.now()),
       codingScheme: JSON.stringify(scheme),
-      codingSchemeType: 'iqb@1.1',
-      variables: derivedVariables
+      codingSchemeType: 'iqb@1.2',
+      variables: []
     });
   }
 
@@ -73,6 +79,6 @@ export interface VosSchemeChangedData {
   sessionId: string,
   timeStamp: string,
   codingScheme: string,
-  codingSchemeType: 'iqb@1.1',
+  codingSchemeType: 'iqb@1.2',
   variables: VariableInfo[]
 }
