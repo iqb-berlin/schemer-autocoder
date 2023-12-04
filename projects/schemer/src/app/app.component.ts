@@ -9,11 +9,11 @@ import {CodingFactory} from "@iqb/responses/coding-factory";
   selector: 'app-root',
   template: `
     <mat-drawer-container class="coder-body">
-      <mat-drawer #drawer mode="side" [hidden]="isStandalone">
+      <mat-drawer #drawer mode="side">
         <schema-checker [codingScheme]="codings"></schema-checker>
       </mat-drawer>
       <mat-drawer-content class="drawer-content">
-        <div>
+        <div *ngIf="isStandalone">
           <button mat-icon-button (click)="drawer.toggle()" [matTooltip]="drawer.opened ? 'Check ausblenden' : 'Check einblenden'">
             <mat-icon>{{drawer.opened ? 'chevron_left' : 'chevron_right'}}</mat-icon>
           </button>
@@ -21,6 +21,7 @@ import {CodingFactory} from "@iqb/responses/coding-factory";
         <iqb-schemer class="drawer-schemer"
                      [varList]="varList"
                      [codingScheme]="codings"
+                     (codingSchemeChanged)="emitCodingSchemeChanged()"
         ></iqb-schemer>
       </mat-drawer-content>
     </mat-drawer-container>
@@ -46,12 +47,12 @@ import {CodingFactory} from "@iqb/responses/coding-factory";
           align-items: stretch;
         }
       `,
-    `
-        .drawer-button {
-          flex: 0 0 40px;
+      `
+        .drawer-schemer {
+          flex: 1 1 auto;
         }
       `,
-    `
+      `
         .drawer-content {
           padding: 0;
           display: flex;
@@ -64,7 +65,6 @@ import {CodingFactory} from "@iqb/responses/coding-factory";
   ]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @ViewChild(SchemerComponent) schemerElement: SchemerComponent | undefined;
   private ngUnsubscribe = new Subject<void>();
   isStandalone: boolean = window === window.parent;
   varList: VariableInfo[] = [];
@@ -82,16 +82,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this.varList = message.variables;
         if (message.codingScheme) {
             const codingScheme = JSON.parse(message.codingScheme);
-            this.codings = new CodingScheme(codingScheme.variableCodings);
+            this.codings = new CodingScheme(codingScheme.variableCodings || []);
         }
       });
-    if (this.schemerElement) {
-      this.schemerElement.codingSchemeChanged
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          () => this.veronaAPIService.sendVosSchemeChangedNotification(this.codings)
-        )
-    }
+  }
+
+  emitCodingSchemeChanged() {
+    this.veronaAPIService.sendVosSchemeChangedNotification(this.codings);
   }
 
   setNewVarlist(varList: VariableInfo[] | null) {
@@ -106,6 +103,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   setNewCodingScheme(codings: CodingScheme | null) {
+    console.log(codings);
     if (codings) this.codings = codings;
   }
 

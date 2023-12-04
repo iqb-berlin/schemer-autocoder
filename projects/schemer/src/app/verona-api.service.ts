@@ -50,7 +50,6 @@ export class VeronaAPIService {
   }
 
   sendVosSchemeChangedNotification(scheme: CodingScheme | null): void {
-    console.log('schemer: sendVosSchemeChangedNotification ', scheme);
     this.send(<VosSchemeChangedData>{
       type: 'vosSchemeChangedNotification',
       sessionId: this.sessionID,

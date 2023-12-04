@@ -1,7 +1,7 @@
 {
   "name": "schemer-autocoder",
   "config": {
-    "schemer_version": "1.2.0-beta"
+    "schemer_version": "1.2.0-beta2"
   },
   "scripts": {
     "ng": "ng",
@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
-    "@iqb/ngx-coding-components": "0.0.2",
+    "@iqb/ngx-coding-components": "0.1.0",
     "@iqb/responses": "^0.18.0",
     "@ngx-translate/core": "^15.0.0",
     "ngx-build-plus": "^16.0.0",
